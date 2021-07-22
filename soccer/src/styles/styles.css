@@ -1,0 +1,45 @@
+.form {
+    
+    width:100%;
+    max-width: 500px;
+}
+
+.form-select {
+    width:100%;
+    max-width: 200px;
+}
+
+.team-card {
+    width: 100%;
+    max-width: 300px;
+}
+
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 40%;
+  
+  }
+  
+  .card:hover, .card.game-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  .container {
+    padding: 2px 16px;
+  }
+
+  .custom-nav-link {
+      color:#fff;
+  }
+
+  .card.game-card, .likes-section, .bets-section {
+      width:95%; 
+  }
+
+  .card-container {
+      width:700px;
+      background-color:#4E6FC9;
+      
+  }

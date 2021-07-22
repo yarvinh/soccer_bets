@@ -1,0 +1,2 @@
+class TeamEventsController < ApplicationController
+end

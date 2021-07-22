@@ -1,0 +1,16 @@
+<% if session[:user_id] %>
+  <%= link_to('Add new game',new_game_path)%> 
+<% end %>
+<ul>
+    <% @games.each do |game| %>
+        <li>
+           <p> <%= game.teams[0].fc%> VS
+           <%= game.teams[1].fc%> </p>
+           <p> Date: <%= game.date %></p>
+           <p> Time: <%= game.time %> </p>
+        </li>
+     
+        <%= button_to "delete", {:controller => :games, :action => 'destroy', :id => game.id }, :method => :delete %>
+        ___________________________________________
+    <% end %>
+</ul>
