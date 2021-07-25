@@ -19,9 +19,13 @@ class GamesController < ApplicationController
     end
     
     def new 
-        user = User.find(session[:user_id])
-        if User.find_by(admin: true).id === session[:user_id]
-          @game = Game.new
+        if logged_in?
+          user = User.find(session[:user_id])
+          if User.find_by(admin: true).id === session[:user_id]
+            @game = Game.new
+          end
+        else
+            redirect_to '/login'
         end
     end
 

@@ -8,7 +8,7 @@ class UsersController < ApplicationController
         if session[:user_id].to_s == params[:id].to_s
           @user = User.find(params[:id])
         else
-          redirect_to '/sessions/new'
+          redirect_to '/login'
         end
       end
   
