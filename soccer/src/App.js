@@ -11,7 +11,7 @@ import {BrowserRouter, Switch, Route, Redirect,Link} from 'react-router-dom'
 import User from './components/users/User'
 import LogOut from './components/users/LogOut'
 import './styles/styles.css'
-
+import Settings from './components/users/Settings';
 
 
 class App extends Component{
@@ -48,11 +48,14 @@ render () {
               <Link to='/teams' className="nav-link custom-nav-link">Teams</Link>
               {!this.props.loggedIn ? <Link to='/login' className="nav-link custom-nav-link">Log In</Link>:  <Link to='/signout' className="nav-link custom-nav-link">Sign Out</Link>  }
               {!this.props.loggedIn ? <Link to='/signup' className="nav-link custom-nav-link">Sign Up</Link> : null} 
+              {this.props.loggedIn ? <Link to='/settings' className="nav-link custom-nav-link">Settings</Link> : null} 
           </div>    
         </nav>
         {this.props.loggedIn ? <User user={this.props.user}/>: null} 
          
           <Switch>
+            <Route exact path='/settings' render={(props)=>(<Settings  {...props} currentUser={this.props.user} loggedIn={this.props.loggedIn} />)}/>
+            
             <Route exact path='/signout' render={(props)=>(<LogOut {...props} currentUser={this.props.user} redirect={this.redirect} confirmLoggedIn={this.confirmLoggedIn}/>)}/>
             <Route exact path='/login' render={(props)=>(<Login {...props} redirect={this.redirect} confirmLoggedIn={this.confirmLoggedIn}/>)}>
             {this.props.loggedIn ? <Redirect to='/games'/>:  null} 
@@ -73,7 +76,6 @@ render () {
 
 
 const mapStateToProps = state => { 
-
   return {
      user:  state.user.data && state.user.data.user,
      loggedIn:  state.user.data && state.user.data.logged_in,

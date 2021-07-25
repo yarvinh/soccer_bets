@@ -4,7 +4,7 @@ class OldPasswordValidator < ActiveModel::Validator
        if record.old_password || record.id.nil?
             true
         else
-         record.errors[:user] << "Incorrect password enter"   
+         record.errors[:user] << "Incorrect old password"   
         end
     end
 end

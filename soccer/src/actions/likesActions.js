@@ -13,7 +13,6 @@ export const dispatchLikes = (params) =>{
     ).then(response => {
       return response.json()
     }).then(response => {
-      //  console.log('response',response)
         dispatch({ type: 'UPDATE_GAME_LIKES', games: response })
     })
   }

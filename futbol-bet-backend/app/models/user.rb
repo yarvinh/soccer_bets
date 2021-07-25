@@ -15,7 +15,7 @@ class User < ApplicationRecord
     validates_confirmation_of :password , :if => :password_required?
 
    def old_password=(password)
-     if self.authenticate(password[:old_password])
+     if self.authenticate(password)
       @old_password = true
      end
    end

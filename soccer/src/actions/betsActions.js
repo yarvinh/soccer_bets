@@ -1,5 +1,4 @@
 export const dispatchBets = (params) =>{
-    console.log('a',params)
     return (dispatch) => {
     dispatch({ type: 'LOADING_GAME_BETS'})
     fetch(`http://localhost:3000/bets`,

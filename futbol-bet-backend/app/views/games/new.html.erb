@@ -1,3 +1,7 @@
+
+
+
+
 <%= form_for(@game) do |f| %>
     <ul> 
        <%if flash[:error]%>
@@ -7,15 +11,15 @@
         <% end %>
     </ul>
 
-    <%= f.label :competition %>
-   <select name="game[competition]">
+    <%= f.label :international_competitions %>
+  <select name="game[competition]">
      <option >none</option>
      <option value="Champion League">Champion League</option>
      <option value="Euro League">Euro League</option>
      <option value="Euro Cup">Euro Cup</option>
      <option value="World Cup">World Cup</option>
      <option value="Copa America">Copa America</option>
-   </select>
+  </select>
       <br>
     <%= f.label :team_1 %>
     <%= f.collection_select :team_1_id, Team.all, :id, :fc %> <br>

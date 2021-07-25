@@ -122,23 +122,42 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
         return state = {
           data: state.data,
           loading: true
-        }
-      case 'ADD_USER':
+        } 
+
+        case 'ADD_USER':
         return {
            ...state,
           data: action.data,
           loading: false
-        }
+        } 
+
       default:
         return state;
     }
   }
 
+const editUserReducer=(state = { message: {}, loading: false }, action)=>{
 
+  switch(action.type) {
+  case 'LOADING_SETTINGS':
+    return state = {
+      message: state.user,
+      loading: true
+    } 
+  case 'EDITED_USER':
+    return {
+       ...state,
+      message: action.user,
+      loading: false
+    } 
+    default:
+      return state;
+  }
+}
 
 
 const rootReducer = combineReducers({
-  // likes: LikesReducer,
+  editedMessage: editUserReducer,
   teams: TeamsReducer,
   games: GamesReducer,
   login: LoginReducer, 
