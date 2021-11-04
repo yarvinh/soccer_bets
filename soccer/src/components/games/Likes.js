@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { dispatchLikes } from '../../actions/likesActions'
+import { dispatchLikes, dislike } from '../../actions/likesActions'
 // import { fetchCurrentUser } from '../../actions/userAction';
 
 
@@ -12,23 +12,28 @@ class Likes extends Component {
       const likesParams = {user_id: this.props.user_id,game_id: this.props.game_id}
       this.props.dispatchLikes(likesParams)
     }
-    componentDidMount() {
-    
+
+    handleOnclickDislike = (e)=>{
+        this.props.dislike(this.likedIt())
+    }
+
+    likedIt = ()=>{
+        return this.props.game.likes.find((like)=>{
+            return like.user_id  === this.props.user_id.toString()
+        })
+
     }
 
     renderLikes = ()=>{
         const style = {
             color: 'red',
             fontSize: 20
-          };
-        const likedIt = this.props.game.likes.find((like)=>{
-            return like.user_id  === this.props.user_id.toString()
-        })
+        };
        
-        if (likedIt){
+        if (this.likedIt()){
             return (
                 <div>
-                    <i  style={style} className="fas fa-heart"></i> 
+                    <i  onClick={this.handleOnclickDislike} style={style} className="fas fa-heart"></i> 
                 </div>
             )
         }else{
@@ -56,18 +61,10 @@ class Likes extends Component {
 
 
 
-// const mapStateToProps = state => {
-//     // console.log('likes',state)
-//   return {
-//     //  rerenderLikes: state.likes.likes,
-//     //  userlikedIt: state.likes.userlikedIt  
-//   }
-// }
- 
-
 const mapDispatchToProps = dispatch => {
   return {
-    dispatchLikes: (action) => dispatch(dispatchLikes(action))
+    dispatchLikes: (action) => dispatch(dispatchLikes(action)),
+    dislike: (action) => dispatch(dislike(action))
   }
 }
 export default connect(null, mapDispatchToProps)(Likes)

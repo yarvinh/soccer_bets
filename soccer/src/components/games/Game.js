@@ -17,7 +17,7 @@ class Game extends Component {
     if (this.props.loggedIn){
       return (
         <div className="bets-section bg-light mx-auto my-4 py-2">
-          <Bets  currentUser={this.props.currentUser} game={this.props.game} teamOne={this.props.teamOne} teamTwo={this.props.teamTwo} />
+          <Bets fetchCurrentUser={this.props.fetchCurrentUser} currentUser={this.props.currentUser} game={this.props.game} teamOne={this.props.teamOne} teamTwo={this.props.teamTwo} />
        </div>
       )
     }

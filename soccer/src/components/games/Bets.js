@@ -11,11 +11,16 @@ class Bets extends Component {
   }
 
 
+
+
+
+
   handleSubmit = (e) => {
     e.preventDefault()
     if (this.state.team_id !== ''&& this.state.game_id !== '' && this.state.user_id !== '' && this.state.amount !== ''){
       this.props.dispatchBets(this.state)
-      
+      // props from  App to GameContainer to Game to Bets
+      // this.props.fetchCurrentUser()
     }
 
      
@@ -124,7 +129,7 @@ class Bets extends Component {
               Team:
               <img src={teamUserBet.logo_url} alt='' width="15" height="15"/>
             </span>
-            
+           
           </div>
           )   
       }

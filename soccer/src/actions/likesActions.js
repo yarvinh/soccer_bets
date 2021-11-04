@@ -17,3 +17,25 @@ export const dispatchLikes = (params) =>{
     })
   }
 }
+
+
+export const dislike = (like) =>{
+  return (dispatch) => {
+  dispatch({ type: 'LOADING_GAME_LIKES'})
+  fetch(`http://localhost:3000/likes/${like.id}`,
+           { 
+
+    method: "DELETE", 
+    headers: { "Content-type": "application/json"  , "Accept": "application/json"
+
+   }, 
+   body: JSON.stringify(like)
+ }
+  ).then(response => {
+    return response.json()
+  }).then(response => {
+      dispatch({ type: 'UPDATE_GAME_LIKES', games: response })
+  })
+}
+}
+

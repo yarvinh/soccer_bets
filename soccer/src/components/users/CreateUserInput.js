@@ -21,7 +21,6 @@ class UserInput extends Component {
 
 
   render() {
-
     return (
       <div className="container d-flex justify-content-center align-items-center">
         <form onSubmit={this.handleOnSubmit} className="form">

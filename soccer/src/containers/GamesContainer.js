@@ -23,10 +23,11 @@ class GamesContainer extends Component {
    }
 
    renderGames = ()=>{
+     console.log(this.props)
         return this.props.games && this.props.games.map((game)=>{
             return (      
            
-             <Game loggedIn={this.props.loggedIn} key={game.id} currentUser={this.props.currentUser}  game={game} teamOne={game.teams[0]} teamTwo={game.teams[1]}/>
+             <Game fetchCurrentUser={this.props.fetchCurrentUser} loggedIn={this.props.loggedIn} key={game.id} currentUser={this.props.currentUser}  game={game} teamOne={game.teams[0]} teamTwo={game.teams[1]}/>
 
             )
         })

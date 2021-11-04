@@ -17,4 +17,12 @@ class LikesController < ApplicationController
     games = Game.all
     render json:GamesSerializer.new(games).to_serialized_json
     end
+
+    def destroy
+      like = Like.find(params[:id])
+      like.delete
+      games = Game.all
+      render json:GamesSerializer.new(games).to_serialized_json
+    end
+
 end

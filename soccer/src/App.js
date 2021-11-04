@@ -15,25 +15,32 @@ import Settings from './components/users/Settings';
 
 
 class App extends Component{
-  currentUser = () => {
+  fetchCurrentUser = () => {
     this.props.fetchCurrentUser()  
   }
   componentDidMount(){
-    this.currentUser()  
+    this.fetchCurrentUser()  
   }
 
   redirect =()=>{
-    this.currentUser()   
+    this.fetchCurrentUser()   
     return <Redirect to='/games' />
   
   }
   confirmLoggedIn=()=>{
-    this.currentUser()   
+    this.fetchCurrentUser()   
     return  this.props.loggedIn
 
   }
 
+
+
+
+
+  
+
 render () {
+ 
   return ( 
     <>   
         <BrowserRouter >
@@ -61,7 +68,7 @@ render () {
             {this.props.loggedIn ? <Redirect to='/games'/>:  null} 
             </Route>
             <Route exact path='/signup' render={(props)=>(<CreateUsersContainer  {...props} redirect={this.redirect} confirmLoggedIn={this.confirmLoggedIn}/>)}/>
-            <Route exact path='/games' render={(props)=>(<GamesContainer {...props} currentUser={this.props.user} loggedIn={this.props.loggedIn}/>)}/>
+            <Route exact path='/games' render={(props)=>(<GamesContainer {...props} fetchCurrentUser={this.fetchCurrentUser} currentUser={this.props.user} loggedIn={this.props.loggedIn}/>)}/>
             <Route exact path='/teams' component={Teams}/>
           </Switch>
          </div> 
