@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import Bets from './Bets'
+import {Link, Route} from 'react-router-dom'
 import Likes from './Likes'
 import '../../styles/styles.css'
 
 
 class Game extends Component {
   
-  handleOnClick = (e) => {
-    console.log("testing")
-
-  }
 
  
 
@@ -62,17 +59,17 @@ date = ()=>{
                 <div className="card-header">
                   <p> {this.props.game.competition} </p>
                 </div>
-              
-                <div className="card-body">
-                    <span >  
-                        <img src={this.props.teamOne.logo_url} alt='' width="20" height="20"/> {this.props.teamOne.fc} 
-                    </span>  
-                      <p>VS</p>
-                    <span>
-                        <img src={this.props.teamTwo.logo_url} alt='' width="20" height="20"/> {this.props.teamTwo.fc}  
-                    </span>
-                </div>
-
+                <Link to={`/games/${this.props.game.id}`}>  
+                  <div className="card-body">
+                      <span >  
+                          <img src={this.props.teamOne.logo_url} alt='' width="20" height="20"/> {this.props.teamOne.fc} 
+                      </span>  
+                        <p>VS</p>
+                      <span>
+                          <img src={this.props.teamTwo.logo_url} alt='' width="20" height="20"/> {this.props.teamTwo.fc}  
+                      </span>
+                  </div>
+                </Link>
                 <div className="card-footer">
                   {this.date()}
               </div>

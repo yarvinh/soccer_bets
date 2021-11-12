@@ -17,19 +17,15 @@ class Bets extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    if (this.state.team_id !== ''&& this.state.game_id !== '' && this.state.user_id !== '' && this.state.amount !== ''){
+    if (this.state.team_id !== ''&& this.state.game_id !== '' && this.state.user_id !== '' && this.state.amount !== '' && !this.state.amount.includes('-')){
       this.props.dispatchBets(this.state)
-      // props from  App to GameContainer to Game to Bets
-      // this.props.fetchCurrentUser()
-    }
-
-     
+    }   
   }
+
   handleAmountChange = (e) => {
     this.setState({
       amount: e.target.value,
     })
-  
   }
   
   handleTeamChange = (e) => {
@@ -146,12 +142,7 @@ class Bets extends Component {
   }
 };
 
-// const mapStateToProps = state => {
-// return {
-//   //  rerenderLikes: state.likes.likes,
-//   //  userlikedIt: state.likes.userlikedIt  
-// }
-// }
+
 
 
 const mapDispatchToProps = dispatch => {

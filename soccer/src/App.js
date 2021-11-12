@@ -62,7 +62,7 @@ render () {
          
           <Switch>
             <Route exact path='/settings' render={(props)=>(<Settings  {...props} currentUser={this.props.user} loggedIn={this.props.loggedIn} />)}/>
-            
+            <Route exact path='/games/:id' render={(props)=>(<GamesContainer {...props} fetchCurrentUser={this.fetchCurrentUser} currentUser={this.props.user} loggedIn={this.props.loggedIn}/>)}/>
             <Route exact path='/signout' render={(props)=>(<LogOut {...props} currentUser={this.props.user} redirect={this.redirect} confirmLoggedIn={this.confirmLoggedIn}/>)}/>
             <Route exact path='/login' render={(props)=>(<Login {...props} redirect={this.redirect} confirmLoggedIn={this.confirmLoggedIn}/>)}>
             {this.props.loggedIn ? <Redirect to='/games'/>:  null} 

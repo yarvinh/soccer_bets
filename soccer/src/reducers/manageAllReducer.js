@@ -42,6 +42,13 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
                 games: [...state.games],
                 loading: true
         } 
+
+        case 'LOADING_COMMENTS':
+          return state = {
+            ...state,
+            games: [...state.games],
+            loading: true
+      } 
        //////
       case 'ADD_GAMES':
         return {
@@ -66,10 +73,16 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
           ...state,
           games: action.games,
           loading: false
-   } 
-    default:
-      return state;
-    }
+        } 
+        case 'ADD_COMMENTS':
+          return {
+          ...state,
+          games: action.games,
+          loading: false
+        } 
+          default:
+          return state;
+        }
     }
 
 
