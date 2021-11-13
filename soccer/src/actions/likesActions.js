@@ -1,6 +1,6 @@
 export const dispatchLikes = (params) =>{
     return (dispatch) => {
-    dispatch({ type: 'LOADING_GAME_LIKES'})
+    dispatch({ type: 'LOADING_LIKES'})
     fetch(`http://localhost:3000/likes`,
              { 
  
@@ -13,15 +13,17 @@ export const dispatchLikes = (params) =>{
     ).then(response => {
       return response.json()
     }).then(response => {
-        dispatch({ type: 'UPDATE_GAME_LIKES', games: response })
+        dispatch({ type: 'UPDATE_LIKES', games: response })
     })
   }
 }
 
 
+
+
 export const dislike = (like) =>{
   return (dispatch) => {
-  dispatch({ type: 'LOADING_GAME_LIKES'})
+  dispatch({ type: 'LOADING_LIKES'})
   fetch(`http://localhost:3000/likes/${like.id}`,
            { 
 
@@ -34,7 +36,7 @@ export const dislike = (like) =>{
   ).then(response => {
     return response.json()
   }).then(response => {
-      dispatch({ type: 'UPDATE_GAME_LIKES', games: response })
+      dispatch({ type: 'UPDATE_LIKES', games: response })
   })
 }
 }

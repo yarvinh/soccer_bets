@@ -29,7 +29,7 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
           games: [...state.games],
           loading: true
         } 
-      case 'LOADING_GAME_LIKES':
+      case 'LOADING_LIKES':
               return state = {
            ...state,
           games: [...state.games],
@@ -62,7 +62,7 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
                     ...state,
            filter: action.filterBy,
         } 
-        case 'UPDATE_GAME_LIKES':
+        case 'UPDATE_LIKES':
                return {
            ...state,
           games: action.games,

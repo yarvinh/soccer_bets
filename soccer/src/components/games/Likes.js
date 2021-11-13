@@ -8,8 +8,7 @@ class Likes extends Component {
 
 
     handleOnClickLikes = (e) => {
-     console.log(this.props.game.likes)
-      const likesParams = {user_id: this.props.user_id,game_id: this.props.game_id}
+      const likesParams = {user_id: this.props.user_id,game_id: this.props.game_id,comment_id: this.props.comment_id}
       this.props.dispatchLikes(likesParams)
     }
 
@@ -18,13 +17,35 @@ class Likes extends Component {
     }
 
     likedIt = ()=>{
-        return this.props.game.likes.find((like)=>{
+        return this.props.gameOrComment.likes.find((like)=>{
+            console.log('like',  this.props.user_id)
             return like.user_id  === this.props.user_id.toString()
         })
-
     }
 
-    renderLikes = ()=>{
+    renderGameLikes = ()=>{
+        const style = {
+            color: 'red',
+            fontSize: 20
+        };
+       
+        if (this.likedIt()){
+            return (
+                <div>
+                    <i  onClick={this.handleOnclickDislike} style={style} className="fas fa-heart"></i> 
+                </div>
+            )
+        }else{
+            return (
+                <div>
+                    <i onClick={this.handleOnClickLikes} className="far fa-heart"></i> 
+                </div>
+            )   
+        }
+       
+    }
+
+    renderCommentLikes = ()=>{
         const style = {
             color: 'red',
             fontSize: 20
@@ -51,8 +72,8 @@ class Likes extends Component {
   render() {
       return(
      <div>
-         {this.renderLikes()}
-         <span>Likes {this.props.game.likes.length}</span>
+         {this.renderGameLikes()}
+         <span>Likes {this.props.likes.length}</span>
      </div>
       )
 
@@ -64,7 +85,8 @@ class Likes extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     dispatchLikes: (action) => dispatch(dispatchLikes(action)),
-    dislike: (action) => dispatch(dislike(action))
+    dislike: (action) => dispatch(dislike(action)),
+    
   }
 }
 export default connect(null, mapDispatchToProps)(Likes)

@@ -26,7 +26,7 @@ class Game extends Component {
       return (
         <div className="likes-section bg-light mx-auto my-2 py-2">
            <div>
-            <Likes likes={this.props.game.likes_total} game={this.props.game} user_id={this.props.currentUser.id} game_id={this.props.game.id}/>
+            <Likes likeType={'game'} likes={this.props.game.likes} gameOrComment={this.props.game} user_id={this.props.currentUser.id} game_id={this.props.game.id}/>
           </div>
         </div>
       )

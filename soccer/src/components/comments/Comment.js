@@ -1,40 +1,37 @@
 import React, { Component } from 'react';
 import {dispatchComment} from '../../actions/comments'
 import { connect } from 'react-redux';
+import Reply from './Reply'
+import Likes from '../games/Likes'
+
 
 
 class Comment extends Component {
   state = {
     game_id: '',
     user_id: '',
-    comment: ''
+    comment: '',
+    // acordion: 'replies_accordion',
+    // displayAcordion: 'hide_replies'
   }
 
-//   renderLikes = ()=>{
-//     const style = {
-//         color: 'red',
-//         fontSize: 15
-//     };
-   
-//     // if (this.likedIt()){
-//         return (
-//             <div>
-//                 <i  onClick={this.handleOnclickDislike} style={style} className="fas fa-heart"></i> 
-//             </div>
-//         )
-//     // }else{
-//     //     return (
-//     //         <div>
-//     //             <i onClick={this.handleOnClickLikes} className="far fa-heart"></i> 
-//     //         </div>
-//     //     )   
-//     // }
-   
-// }
 
-  // handleOnclickReply = (e)=>{
-  //   console.log(e)
-  // }
+
+
+
+  handleOnclickReply = (e)=>{
+    if(this.state.acordion !== 'replies_accordion active'){
+    this.setState({
+      acordion: 'replies_accordion active',
+      displayAcordion: 'display_replies'
+    })
+  }else{
+    this.setState({
+      acordion: 'replies_accordion',
+      displayAcordion: 'hide_replies'
+    })
+  }
+  }
 
   dateAndTime = (d)=>{
     const date = new Date(d)
@@ -68,15 +65,25 @@ class Comment extends Component {
   comments = () =>{ 
     return ( 
       this.props.game && this.props.game.comments.map((comment)=>{
-        return  (      
-          <li key={comment.id}>
-             <span>Posted by: {comment.user.name} {this.dateAndTime(comment.created_at)}</span>
-             <p>{comment.comment}</p>
-             
-             {/* <span > {this.renderLikes()} (2)</span> */}
-             <button onClick={this.handleOnclickReply}> Replies </button>
-            
-          </li>
+        return  (    
+          <div   className='post'key={comment.id}> 
+            <div >
+              <span >Posted by: {comment.user.name} {this.dateAndTime(comment.created_at)}</span>   
+            </div>
+            <div className='comments'>
+              <p >{comment.comment}</p>
+            </div> 
+            <div>
+              <div>
+                <Likes likeType={'comment'} likes={comment.likes} comment_id={comment.id} user_id={this.props.user.id} gameOrComment={comment}/>
+              </div>
+              <div>
+                <Reply/>
+              </div>
+              
+              
+            </div>
+          </div>
          
         )
       
@@ -108,12 +115,13 @@ class Comment extends Component {
     } else {
       return(
         <div>
-          <ul>
-   
              {this.comments()}
-          </ul>
+             <div>
 
+            </div>
         </div>
+
+
       )
     }
 
@@ -128,3 +136,5 @@ const mapDispatchToProps = dispatch => {
   }
   }
   export default connect(null, mapDispatchToProps)(Comment)
+
+
