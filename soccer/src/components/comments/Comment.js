@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {dispatchComment} from '../../actions/comments'
+import {dispatchComment,deleteComment} from '../../actions/comments'
 import { connect } from 'react-redux';
 import Reply from './Reply'
 import Likes from '../games/Likes'
@@ -11,13 +11,12 @@ class Comment extends Component {
     game_id: '',
     user_id: '',
     comment: '',
-    // acordion: 'replies_accordion',
-    // displayAcordion: 'hide_replies'
   }
 
-
-
-
+  handleDeleteOnClick = (e) => {
+    const params = {id: e.target.value}
+     this.props.deleteComment(params)
+  }
 
   handleOnclickReply = (e)=>{
     if(this.state.acordion !== 'replies_accordion active'){
@@ -56,6 +55,8 @@ class Comment extends Component {
   }
 
   onChangeComment = (e) => {
+    e.target.style.height = "1px";
+    e.target.style.height = (e.target.scrollHeight)+"px";
     this.setState({
       comment: e.target.value,
     })
@@ -66,19 +67,20 @@ class Comment extends Component {
     return ( 
       this.props.game && this.props.game.comments.map((comment)=>{
         return  (    
-          <div   className='post'key={comment.id}> 
+          <div   className='post' key={comment.id}> 
             <div >
-              <span >Posted by: {comment.user.name} {this.dateAndTime(comment.created_at)}</span>   
+              <span >Posted by: {comment.user.name} {this.dateAndTime(comment.created_at)}</span>
+              {comment.user.id === this.props.user.id? <button onClick={this.handleDeleteOnClick} value={comment.id}>Delete</button>:null}
             </div>
             <div className='comments'>
               <p >{comment.comment}</p>
             </div> 
             <div>
               <div>
-                <Likes likeType={'comment'} likes={comment.likes} comment_id={comment.id} user_id={this.props.user.id} gameOrComment={comment}/>
+                <Likes likes={comment.likes} comment_id={comment.id} user_id={this.props.user.id} gameOrComment={comment}/>
               </div>
               <div>
-                <Reply/>
+                <Reply comment_id={comment.id} user_id={this.props.user.id} comment={comment}/>
               </div>
               
               
@@ -99,7 +101,7 @@ class Comment extends Component {
             <form onSubmit={this.handleOnSubmit} value={this.state.comment}>
               <label>What you think about this game?</label> 
               <br></br>
-              <textarea onChange={this.onChangeComment} value={this.state.comment}></textarea> 
+              <textarea onChange={this.onChangeComment} row='1' className='auto_height' value={this.state.comment}></textarea> 
               <input type='submit' value='Comment'/>
             </form>
         </div>
@@ -107,7 +109,7 @@ class Comment extends Component {
         <div>
 
         </div>
-        <ul>
+        <ul className='comment_list'>
              {this.comments()}
         </ul>
         </div>
@@ -132,7 +134,8 @@ class Comment extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatchComment: (action) => dispatch(dispatchComment(action))
+    dispatchComment: (action) => dispatch(dispatchComment(action)),
+    deleteComment: (action) => dispatch(deleteComment(action))
   }
   }
   export default connect(null, mapDispatchToProps)(Comment)

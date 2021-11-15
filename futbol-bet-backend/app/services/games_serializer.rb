@@ -38,7 +38,12 @@
           },
           comments: {
           include:{
-            user: {}
+            user: {},
+            replies: {
+              include: {
+                user: {}
+              }
+            }
           }
           }
         

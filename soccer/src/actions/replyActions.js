@@ -1,7 +1,7 @@
-export const dispatchComment = (params) =>{
+export const dispatchReply = (params) =>{
     return (dispatch) => {
-    dispatch({ type: 'LOADING_COMMENTS'})
-    fetch(`http://localhost:3000/comments`,
+    dispatch({ type: 'LOADING_REPLIES'})
+    fetch(`http://localhost:3000/replies`,
      { 
  
       method: "POST", 
@@ -13,15 +13,15 @@ export const dispatchComment = (params) =>{
     ).then(response => {
       return response.json()
     }).then(response => {
-      dispatch({ type: 'ADD_COMMENTS', games: response })
+      dispatch({ type: 'ADD_REPLY', games: response })
     })
   }
 }
 
-export const deleteComment = (params) => {
+export const deleteReply = (params) => {
   return (dispatch) => {
-    dispatch({ type: 'LOADING_COMMENTS'})
-    fetch(`http://localhost:3000/comments/${params.id}`,
+    dispatch({ type: 'LOADING_REPLIES'})
+    fetch(`http://localhost:3000/replies/${params.id}`,
     {
       method: 'DELETE',
       header: { "Content-type": "application/json"  , "Accept": "application/json"}, 
@@ -29,7 +29,7 @@ export const deleteComment = (params) => {
     }).then(response => {
       return response.json()
     }).then(response => {
-      dispatch({ type: 'DELETE_COMMENT', games: response })
+      dispatch({ type: 'DELETE_REPLY', games: response })
     })
   }
 }

@@ -44,6 +44,7 @@
   background-color: #0d6efd;
   color: white;
   cursor: pointer;
+   cursor: pointer;
   /* padding: 8px; */
   width: 77px;
   border-width: 0px;
@@ -81,32 +82,76 @@
 .post { 
   background-color: rgb(238, 238, 238);
   color: #444;
+  margin: 0 auto;
   /* cursor: pointer; */
   padding: 8px;
-  width: 100%;
+  width: 80%;
   border-width: 3px;
   border-style: solid;
   border-color: rgb(252, 247, 247);
   text-align: left;
-  /* outline: none; */
   font-size: 10px;
-  /* transition: 0.4s; */
  
 }
 
-.comments { 
+.replies { 
+  margin-left: auto;
+  background-color: rgb(238, 238, 238);
+  color: #444;
+  padding: 8px;
+  width: 80%;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(252, 247, 247);
+  text-align: left;
+  border-radius: .6rem;
+  font-size: 10px;
+ 
+}
+.reply { 
   background-color: white;
   color: #444;
-  /* cursor: pointer; */
   padding: 8px;
   width: 100%;
-  /* border-width: 3px; */
-  /* border-style: solid; */
-  /* border-color: rgb(252, 247, 247); */
   text-align: left;
   outline: none;
   font-size: 12px;
   transition: 0.4s;
   border-radius: .6rem;
+  overflow-wrap: break-word;
  
+}
+
+
+.comments { 
+  background-color: white;
+  color: #444;
+  padding: 8px;
+  width: 100%;
+  height: auto;
+  text-align: left;
+  outline: none;
+  font-size: 12px;
+  transition: 0.4s;
+  border-radius: .6rem;
+  overflow-wrap: break-word;
+ 
+}
+
+.comment_list {
+  padding-left: 0;
+}
+
+
+
+
+.auto_height { 
+  width: 70%;
+  min-height: 46px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(14, 12, 158);
+  border-radius: .8rem;
+  font-size: 12px;
+  overflow: hide;
 }

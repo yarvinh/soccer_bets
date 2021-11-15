@@ -18,7 +18,6 @@ class Likes extends Component {
 
     likedIt = ()=>{
         return this.props.gameOrComment.likes.find((like)=>{
-            console.log('like',  this.props.user_id)
             return like.user_id  === this.props.user_id.toString()
         })
     }

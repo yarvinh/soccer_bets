@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Bets from './Bets'
-import {Link, Route} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import Likes from './Likes'
 import '../../styles/styles.css'
 

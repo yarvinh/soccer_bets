@@ -43,7 +43,7 @@ class GamesContainer extends Component {
      if(game){
        return (
          <div>
-           <Game fetchCurrentUser={this.props.fetchCurrentUser} loggedIn={this.props.loggedIn} key={game.id} currentUser={this.props.currentUser}  game={game} teamOne={game.teams[0]} teamTwo={game.teams[1]}/>
+           <Game  fetchCurrentUser={this.props.fetchCurrentUser} loggedIn={this.props.loggedIn} key={game.id} currentUser={this.props.currentUser}  game={game} teamOne={game.teams[0]} teamTwo={game.teams[1]}/>
            <Comment game={game} user={this.props.currentUser}  loggedIn={this.props.loggedIn} />
          </div>
        )

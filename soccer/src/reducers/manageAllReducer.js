@@ -49,6 +49,12 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
             games: [...state.games],
             loading: true
       } 
+      case 'LOADING_REPLIES':
+        return state = {
+          ...state,
+          games: [...state.games],
+          loading: true
+    } 
        //////
       case 'ADD_GAMES':
         return {
@@ -75,6 +81,18 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
           loading: false
         } 
         case 'ADD_COMMENTS':
+          return {
+          ...state,
+          games: action.games,
+          loading: false
+        } 
+        case 'DELETE_COMMENT':
+          return {
+          ...state,
+          games: action.games,
+          loading: false
+        } 
+        case 'ADD_REPLY':
           return {
           ...state,
           games: action.games,
