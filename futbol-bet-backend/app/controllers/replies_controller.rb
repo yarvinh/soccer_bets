@@ -11,6 +11,10 @@ class RepliesController < ApplicationController
     end
     
     def destroy
-
+        reply = Reply.find(params[:id])
+        reply.likes.each{|e|e.delete}
+        reply.delete
+        games = Game.all
+        render json:GamesSerializer.new(games).to_serialized_json
     end
 end

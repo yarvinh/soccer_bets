@@ -55,6 +55,7 @@ class Comment extends Component {
   }
 
   onChangeComment = (e) => {
+    e.preventDefault()
     e.target.style.height = "1px";
     e.target.style.height = (e.target.scrollHeight)+"px";
     this.setState({
@@ -63,24 +64,39 @@ class Comment extends Component {
 
   }
 
-  comments = () =>{ 
+  reverseReplies = (replies)=>{
+    
+    if(replies[0] && replies[replies.length - 1].created_at > replies[0].created_at){  
+           replies = replies.reverse((reply)=>{  
+           return reply.created_at    
+      })
+    }
+    return replies
+
+  }
+
+
+  fewComments=()=>{
+   console.log(this.props.comments)
+  }
+  comments = () =>{    
     return ( 
-      this.props.game && this.props.game.comments.map((comment)=>{
+      this.props.game && this.props.comments.map((comment)=>{
         return  (    
           <div   className='post' key={comment.id}> 
             <div >
+            {comment.user.id === this.props.user.id? <button onClick={this.handleDeleteOnClick} className='delete' value={comment.id}>X</button>:null}
               <span >Posted by: {comment.user.name} {this.dateAndTime(comment.created_at)}</span>
-              {comment.user.id === this.props.user.id? <button onClick={this.handleDeleteOnClick} value={comment.id}>Delete</button>:null}
             </div>
             <div className='comments'>
-              <p >{comment.comment}</p>
+              <p>{comment.comment}</p>
             </div> 
             <div>
               <div>
-                <Likes likes={comment.likes} comment_id={comment.id} user_id={this.props.user.id} gameOrComment={comment}/>
+                {this.props.loggedIn ?<Likes likes={comment.likes} comment_id={comment.id} user_id={this.props.user.id} gameCommentOrReply={comment}/>: null}
               </div>
               <div>
-                <Reply comment_id={comment.id} user_id={this.props.user.id} comment={comment}/>
+                <Reply replies={this.reverseReplies(comment.replies)} loggedIn={this.props.loggedIn} comment_id={comment.id} user_id={this.props.user.id} comment={comment}/>
               </div>
               
               
@@ -101,10 +117,12 @@ class Comment extends Component {
             <form onSubmit={this.handleOnSubmit} value={this.state.comment}>
               <label>What you think about this game?</label> 
               <br></br>
-              <textarea onChange={this.onChangeComment} row='1' className='auto_height' value={this.state.comment}></textarea> 
-              <input type='submit' value='Comment'/>
+              <div className='comment_textArea'>
+                <textarea onChange={this.onChangeComment} row='1' className='auto_height' value={this.state.comment}></textarea> 
+                <input type='submit' className='buttons'value='Comment'/>
+              </div>
             </form>
-        </div>
+          </div>
 
         <div>
 

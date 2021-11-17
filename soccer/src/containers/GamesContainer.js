@@ -24,7 +24,6 @@ class GamesContainer extends Component {
    }
 
    renderGames = ()=>{
-     console.log(this.props)
         return this.props.games && this.props.games.map((game)=>{
             return (      
            
@@ -40,15 +39,24 @@ class GamesContainer extends Component {
        return game.id.toString() ===  this.props.match.params.id.toString()
      })
 
-     if(game){
+     if(game){  
+      let comments = game.comments
+      if(game.comments[0] && game.comments[game.comments.length - 1].created_at > game.comments[0].created_at){  
+             comments = game.comments.reverse((a)=>{  
+             return a.created_at    
+        })
+      }
+     
        return (
          <div>
            <Game  fetchCurrentUser={this.props.fetchCurrentUser} loggedIn={this.props.loggedIn} key={game.id} currentUser={this.props.currentUser}  game={game} teamOne={game.teams[0]} teamTwo={game.teams[1]}/>
-           <Comment game={game} user={this.props.currentUser}  loggedIn={this.props.loggedIn} />
+           <Comment comments={comments} game={game} user={this.props.currentUser}  loggedIn={this.props.loggedIn} />
          </div>
        )
      } 
   }
+
+  
 
   render() {  
     if(this.props.match.path === "/games"){

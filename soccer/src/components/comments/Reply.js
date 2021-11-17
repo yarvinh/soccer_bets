@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {dispatchReply,deleteReply} from '../../actions/replyActions'
+import Likes from '../games/Likes'
 
-// import ReviewsContainer from '../../containers/ReviewsContainer';
 
 class Reply extends Component {
 
@@ -12,10 +12,12 @@ class Reply extends Component {
     displayAcordion: 'hide_replies'
   }
 
-  // auto_height = (elem) =>{  
-  //   elem.style.height = "1px";
-  //   elem.style.height = (elem.scrollHeight)+"px";
-  // }
+  handleDeleteOnClick = (e)=>{
+    const params = {user_id: this.props.user_id, id: e.target.value}
+  
+    this.props.deleteReply(params)
+
+  }
 
   handleOnKeyUp = (e)=>{
    
@@ -69,7 +71,9 @@ class Reply extends Component {
         return  (    
           <div   className='replies' key={reply.id}> 
             <div>
+            {reply.user.id === this.props.user_id? <button onClick={this.handleDeleteOnClick} className='delete' value={reply.id}>x</button>:null}
               <span >Reply by: {reply.user.name} {this.dateAndTime(reply.created_at)}</span>
+             
             </div>
             
               <div className='reply'>
@@ -78,7 +82,7 @@ class Reply extends Component {
               <div>
             
               <div>
-                {/* <Likes likes={comment.likes} comment_id={comment.id} user_id={this.props.user.id} gameOrComment={comment}/> */}
+                {this.props.loggedIn? <Likes likes={reply.likes} reply_id={reply.id} user_id={this.props.user_id} gameCommentOrReply={reply}/>:null}
               </div>
 
               
@@ -89,23 +93,30 @@ class Reply extends Component {
   })
     )
   }
+  replyForm= ()=>{
+    if(this.props.loggedIn){
+      return(
+        <div>
+          <form onKeyUp={this.handleOnKeyUp} >
+            <textarea  onChange={this.handleOnChange} rows="1" className="auto_height" value={this.state.reply}></textarea>
+          </form>  
+        </div>
+      )
+    }
+  }
 
   render() {
+ 
     return (
       <div>
-        <button onClick={this.handleOnclickReply} className={this.state.acordion}> Replies </button>
+        <div>
+          <button onClick={this.handleOnclickReply} className={this.state.acordion}> {`${this.props.comment.replies.length} Replies`} </button>
+          </div>
           <div className={this.state.displayAcordion}>
             <div>
               {this.renderReplies()}
             </div>
-            <div>
-              <form onKeyUp={this.handleOnKeyUp} >
-                {/* <input onChange={this.handleOnChange} rows='1' value={this.state.value}  type='text' className="auto_height"/>    */}
-                <textarea  onChange={this.handleOnChange} rows="1" className="auto_height" value={this.state.reply}></textarea>
-
-              </form>  
-             
-            </div> 
+            {this.replyForm()}
         </div>
       </div>
     );

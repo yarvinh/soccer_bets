@@ -15,6 +15,9 @@ export const dispatchLikes = (params) =>{
     }).then(response => {
         dispatch({ type: 'UPDATE_LIKES', games: response })
     })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   }
 }
 
@@ -38,6 +41,9 @@ export const dislike = (like) =>{
   }).then(response => {
       dispatch({ type: 'UPDATE_LIKES', games: response })
   })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
 }
 }
 

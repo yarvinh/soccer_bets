@@ -31,16 +31,20 @@
 
           teams: {},
           likes: {},
+          
           bets: {
             include: {
               user: {}
             }
           },
+
           comments: {
           include:{
             user: {},
+
             replies: {
               include: {
+                likes: {},
                 user: {}
               }
             }

@@ -8,7 +8,7 @@ class Likes extends Component {
 
 
     handleOnClickLikes = (e) => {
-      const likesParams = {user_id: this.props.user_id,game_id: this.props.game_id,comment_id: this.props.comment_id}
+      const likesParams = {user_id: this.props.user_id,game_id: this.props.game_id,comment_id: this.props.comment_id, reply_id: this.props.reply_id}
       this.props.dispatchLikes(likesParams)
     }
 
@@ -17,15 +17,18 @@ class Likes extends Component {
     }
 
     likedIt = ()=>{
-        return this.props.gameOrComment.likes.find((like)=>{
-            return like.user_id  === this.props.user_id.toString()
+        return this.props.gameCommentOrReply && this.props.gameCommentOrReply.likes.find((like)=>{
+            if (this.props.user_id){
+              return like.user_id  === this.props.user_id.toString()
+            }
         })
     }
 
     renderGameLikes = ()=>{
         const style = {
             color: 'red',
-            fontSize: 20
+            fontSize: 20,
+            cursor: 'pointer'
         };
        
         if (this.likedIt()){
@@ -37,7 +40,7 @@ class Likes extends Component {
         }else{
             return (
                 <div>
-                    <i onClick={this.handleOnClickLikes} className="far fa-heart"></i> 
+                    <i onClick={this.handleOnClickLikes} style={{cursor: 'pointer'}}className="far fa-heart"></i> 
                 </div>
             )   
         }

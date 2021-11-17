@@ -98,6 +98,12 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
           games: action.games,
           loading: false
         } 
+        case 'DELETE_REPLY':
+          return {
+          ...state,
+          games: action.games,
+          loading: false
+        } 
           default:
           return state;
         }

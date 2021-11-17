@@ -15,5 +15,6 @@ export const dispatchBets = (params) =>{
     }).then(response => {
       dispatch({ type: 'ADD_GAME_BETS', games: response })
     })
+    
   }
 }
