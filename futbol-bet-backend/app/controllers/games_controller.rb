@@ -8,12 +8,13 @@ class GamesController < ApplicationController
         if user_id = session[:user_id]
           if User.find(user_id).admin
              @games = Game.all
+            
           else
-            games = Game.all
+            games = Game.future_games
             render json:GamesSerializer.new(games).to_serialized_json
           end
         else
-            games = Game.all
+            games = Game.future_games
             render json:GamesSerializer.new(games).to_serialized_json
         end    
     end
@@ -30,15 +31,20 @@ class GamesController < ApplicationController
     end
 
     def create
-        @game =  Game.create(game_params)
-        team_1 = Team.find(game_params[:team_1_id])
+        @game =  Game.new(game_params)
+        @game.time = Game.time_zone(params[:game][:date])
+        @game.date = Game.date(params[:game][:date])
+        @game.save
+
+        team_1 = Team.find_by_id(game_params[:team_1])
         team_1_event = TeamEvent.new
         team_1_event.team = team_1
         team_1_event.game = @game
  
         team_1_event.save
          
-        team_2 = Team.find(game_params[:team_2_id])
+        
+        team_2 = Team.find(game_params[:team_2])
         team_2_event = TeamEvent.new
         team_2_event.team = team_2
         team_2_event.game = @game
@@ -65,8 +71,8 @@ class GamesController < ApplicationController
         redirect_to games_path
     end
 
-    def game_params
-        params.require(:game).permit(:team_1_id, :team_2_id,  :time, :date, :competition)
+    def game_params(*args)
+        params.require(:game).permit(:competition, :team_1, :team_2)
     end
 
 end

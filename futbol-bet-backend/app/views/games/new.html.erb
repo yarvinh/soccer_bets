@@ -22,16 +22,13 @@
   </select>
       <br>
     <%= f.label :team_1 %>
-    <%= f.collection_select :team_1_id, Team.all, :id, :fc %> <br>
+    <%= f.collection_select :team_1, Team.all, :id, :fc %> <br>
     
     <%= f.label :team_2 %>
-    <%= f.collection_select :team_2_id, Team.all, :id, :fc %><br>
+    <%= f.collection_select :team_2, Team.all, :id, :fc %><br>
     
     <%= f.label :date %>
-    <%= f.date_field :date %> <br>
-
-    <%= f.label :time %>
-    <%= f.time_field :time %> <br>
-    
+    <%= f.datetime_field :date %> <br>
+   
     <%= f.submit %>
 <% end %>

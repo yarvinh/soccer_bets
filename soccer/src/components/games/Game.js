@@ -11,10 +11,11 @@ class Game extends Component {
  
 
   bets = () => {
+  
     if (this.props.loggedIn){
       return (
         <div className="bets-section bg-light mx-auto my-4 py-2">
-          <Bets fetchCurrentUser={this.props.fetchCurrentUser} currentUser={this.props.currentUser} game={this.props.game} teamOne={this.props.teamOne} teamTwo={this.props.teamTwo} />
+          <Bets bets={this.props.game.bets} fetchCurrentUser={this.props.fetchCurrentUser} currentUser={this.props.currentUser} game={this.props.game} teamOne={this.props.teamOne} teamTwo={this.props.teamTwo} />
        </div>
       )
     }
@@ -36,9 +37,9 @@ class Game extends Component {
 
 
 date = ()=>{
-  const date = new Date(this.props.game.date)
+ const date = new Date(this.props.game.date.replace(/-/g, '\/'))
   const time = new Date(this.props.game.time)
-
+  
   return (
     <div>
         <span>{date.toDateString()} at </span>      
@@ -75,9 +76,13 @@ date = ()=>{
               </div>
             </div>
           </div>
-    
+          
           {this.renderLikes()}
+          <div >
+            <span>{this.props.game.bets.length} Bets</span>
+          </div>
           {this.bets()}
+
 
         </div>
 

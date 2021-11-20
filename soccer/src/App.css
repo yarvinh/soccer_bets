@@ -137,7 +137,7 @@
  
 }
 
-.comment_list {
+.comments_container {
   padding-left: 0;
 }
 
@@ -147,7 +147,6 @@
 .auto_height { 
   width: 70%;
   min-height: 46px;
-  /* padding: 0px; */
   border-width: 5px;
   border-style: solid;
   border-color:  #0d6efd;;
@@ -196,4 +195,15 @@
   display:flex;
   justify-content: center;
 
+}
+
+.reload{
+  background-color: #cdd3ce;
+  cursor: pointer;
+  width: 150px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(15, 13, 13); 
+  font-size: 12px;
+  border-radius: .50rem;
 }

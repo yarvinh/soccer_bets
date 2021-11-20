@@ -17,21 +17,21 @@
 
 class BetsController < ApplicationController
     def create
-        team = Team.find(params[:team_id])
-        game = Game.find(params[:game_id])
-        user = User.find(params[:user_id])
+        team = Team.find_by_id(params[:team_id])
+        game = Game.find_by_id(params[:game_id])
+        user = User.find_by_id(params[:user_id])
         
         if !params[:amount].include?("-")
-          bet = Bet.new(amount: params[:amount])
-          bet.team = team
-          bet.game = game
-          bet.user = user
-          bet.save
-          user.coins -=  bet.amount.to_i
-          user.save
+            bet = Bet.new(amount: params[:amount])
+            bet.team = team
+            bet.game = game
+            bet.user = user
+            bet.save
+            user.coins -=  bet.amount.to_i
+            user.save
         end
 
-        games = Game.all
+        games = Game.future_games
         render json: GamesSerializer.new(games).to_serialized_json
     end
 end

@@ -37,10 +37,10 @@ class Bets extends Component {
   }
 
   teamOneBetSum = () => {
-    const bets = [...this.props.game.bets]
+    const bets = [...this.props.bets]
     let counter = 0
     bets.forEach((bet) => {
-      if (this.props.teamOne.id.toString() === bet.team_id.toString()){
+      if (this.props.teamOne && this.props.teamOne.id.toString() === bet.team_id.toString()){
         counter  += bet.amount 
       }else{
         counter += 0
@@ -50,7 +50,7 @@ class Bets extends Component {
   }
 
   teamTwoBetSum = () => {  
-    const bets = [...this.props.game.bets]
+    const bets = [...this.props.bets]
     let  counter = 0
     bets.forEach((bet) => {
      
@@ -65,7 +65,7 @@ class Bets extends Component {
   }
 
   allBetsTotal = () => {
-    const bets = [...this.props.game.bets]
+    const bets = [...this.props.bets]
       return bets.reduce(function(acc, bet) {
         return acc + bet.amount
       }, 0);
@@ -89,18 +89,20 @@ class Bets extends Component {
 
 
   renderBets = () => {
-    const userBet = this.props.game.bets.find((bet)=>{
+
+    
+    const currentUserBet = this.props.bets.find((bet)=>{
         return bet.user_id.toString() === this.props.currentUser.id.toString()
     })
-   
-    if (!userBet){   
+    if (!currentUserBet){   
       return (
         <div className='bet_form p-3'>     
           <form onSubmit={this.handleSubmit}> 
             <label className="form-label"> Bets </label> 
             <br/> 
             <select className="form-select mx-auto mb-3" onChange={this.handleTeamChange}>
-              <option value=''>Select team</option>
+              <option value=''>Bet Obtions</option>
+              <option value='tie'>Tie</option>
               <option value={this.props.teamOne.id}>{this.props.teamOne.fc}</option>
               <option value={this.props.teamTwo.id}>{this.props.teamTwo.fc}</option>
             </select>
@@ -115,15 +117,16 @@ class Bets extends Component {
         </div>
       )
     } else {
-      const teamUserBet = this.props.game.teams.find((team)=>{
-        return team.id.toString() === userBet.team_id.toString()
+
+      const userSelected = currentUserBet.team && this.props.game.teams.find((t)=>{   
+         return  t.id.toString() === currentUserBet.team_id.toString()  
       })
         return (
           <div className='bet_review'>
-            <p>You bet: ${userBet.amount}</p>
+            <p>You bet: ${currentUserBet.amount}</p>
             <span>
-              Team:
-              <img src={teamUserBet.logo_url} alt='' width="15" height="15"/>
+              You Bet For:
+              {currentUserBet.team ?<img src={userSelected.logo_url} alt='' width="15" height="15"/>: <span>Tie</span>}
             </span>
            
           </div>

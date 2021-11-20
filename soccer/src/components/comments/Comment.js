@@ -11,6 +11,8 @@ class Comment extends Component {
     game_id: '',
     user_id: '',
     comment: '',
+    displayMoreComments: 3,
+  
   }
 
   handleDeleteOnClick = (e) => {
@@ -64,58 +66,77 @@ class Comment extends Component {
 
   }
 
-  reverseReplies = (replies)=>{
-    
-    if(replies[0] && replies[replies.length - 1].created_at > replies[0].created_at){  
-           replies = replies.reverse((reply)=>{  
-           return reply.created_at    
-      })
+
+
+
+  displayOnSubmit=(e)=>{
+   e.preventDefault()
+    let amount = this.state.displayMoreComments += 10
+    this.setState({
+      displayMoreComments: amount,
+    })
+  }
+  display10Comments=()=>{
+    const  newCommentsArr = []
+    for (let i = 0; i < this.state.displayMoreComments; i++){
+      if(this.props.comments[i]){
+      newCommentsArr.push(this.props.comments[i])
     }
-    return replies
-
+    }
+      return newCommentsArr 
   }
 
-
-  fewComments=()=>{
-   console.log(this.props.comments)
+  displayButton = ()=>{
+      return (
+      <form onSubmit={this.displayOnSubmit} >  
+        <input  className='reload' type='submit' value='Reload more comments'/> 
+      </form>
+      )
+ 
   }
+
   comments = () =>{    
-    return ( 
-      this.props.game && this.props.comments.map((comment)=>{
-        return  (    
-          <div   className='post' key={comment.id}> 
-            <div >
-            {comment.user.id === this.props.user.id? <button onClick={this.handleDeleteOnClick} className='delete' value={comment.id}>X</button>:null}
-              <span >Posted by: {comment.user.name} {this.dateAndTime(comment.created_at)}</span>
-            </div>
-            <div className='comments'>
-              <p>{comment.comment}</p>
-            </div> 
-            <div>
-              <div>
-                {this.props.loggedIn ?<Likes likes={comment.likes} comment_id={comment.id} user_id={this.props.user.id} gameCommentOrReply={comment}/>: null}
+      return ( 
+        this.props.game && this.display10Comments().map((comment)=>{
+          return  (    
+            <div   className='post' key={comment.id}> 
+
+              <div >
+                {comment.user.id === this.props.user.id? <button onClick={this.handleDeleteOnClick} className='delete' value={comment.id}>X</button>:null}
+                <span >Posted by: {comment.user.name} {this.dateAndTime(comment.created_at)}</span>
               </div>
+
+              <div className='comments'>
+                <p>{comment.comment}</p>
+              </div> 
+
               <div>
-                <Reply replies={this.reverseReplies(comment.replies)} loggedIn={this.props.loggedIn} comment_id={comment.id} user_id={this.props.user.id} comment={comment}/>
+                <div>
+                  {this.props.loggedIn ?<Likes likes={comment.likes} comment_id={comment.id} user_id={this.props.user.id} gameCommentOrReply={comment}/>: null}
+                </div>
+
+                <div>
+                  <Reply replies={comment.replies_by_date} loggedIn={this.props.loggedIn} comment_id={comment.id} user_id={this.props.user.id} comment={comment}/>
+                </div>  
+
               </div>
-              
-              
+
             </div>
-          </div>
          
-        )
-      
-  })
-    )
+          )    
+        })
+      )
   }
+
 
   render() {
+   
     if (this.props.loggedIn){
       return (
         <div>
           <div>
             <form onSubmit={this.handleOnSubmit} value={this.state.comment}>
-              <label>What you think about this game?</label> 
+              <label>What do you think about this game?</label> 
               <br></br>
               <div className='comment_textArea'>
                 <textarea onChange={this.onChangeComment} row='1' className='auto_height' value={this.state.comment}></textarea> 
@@ -123,25 +144,29 @@ class Comment extends Component {
               </div>
             </form>
           </div>
-
-        <div>
+      <div>
 
         </div>
-        <ul className='comment_list'>
+        <div className='comments_container'>
+            <div>
              {this.comments()}
-        </ul>
+            </div>
+            <div>
+            {this.displayButton()}
+          </div>
         </div>
+      </div>
       );
     } else {
       return(
         <div>
-             {this.comments()}
+            <div>
+                {this.comments()}
+             </div>
              <div>
-
+               {this.displayButton()}
             </div>
         </div>
-
-
       )
     }
 

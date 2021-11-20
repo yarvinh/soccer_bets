@@ -18,16 +18,17 @@ class CommentsController < ApplicationController
     end
 
     def destroy
-        comment = Comment.find(params[:id])
-        comment.replies.each{|e|
-          e.likes.each{|like|
-            like.delete
+        comment = Comment.find_by(id: params[:id])
+        if comment
+          comment.replies.each{|e|
+            e.likes.each{|like|
+              like.delete
+            }
           }
-        }
-        comment.replies.each{|e|e.delete}
-        comment.likes.each{|e|e.delete}
-        
-        comment.delete
+          comment.replies.each{|e|e.delete}
+          comment.likes.each{|e|e.delete}
+          comment.delete
+      end
         games = Game.all
         render json:GamesSerializer.new(games).to_serialized_json
       end

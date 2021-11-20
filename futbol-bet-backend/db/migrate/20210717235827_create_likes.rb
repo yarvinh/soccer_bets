@@ -4,6 +4,8 @@ class CreateLikes < ActiveRecord::Migration[6.0]
       t.integer :likes, default: 0
       t.string :user_id
       t.string :game_id
+      t.string :reply_id
+      t.string :comment_id
       t.timestamps
     end
   end

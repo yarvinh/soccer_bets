@@ -9,7 +9,8 @@ class Reply extends Component {
   state = {
     reply: '',
     acordion: 'replies_accordion',
-    displayAcordion: 'hide_replies'
+    displayAcordion: 'hide_replies',
+    displayReplies: 3,
   }
 
   handleDeleteOnClick = (e)=>{
@@ -31,7 +32,6 @@ class Reply extends Component {
   }
 
   handleOnChange = (e)=>{
-    console.log(e.which)
     e.target.style.height = "2px";
     e.target.style.height = (e.target.scrollHeight)+"px";
     this.setState({
@@ -54,6 +54,24 @@ class Reply extends Component {
   }
   }
 
+  displayOnSubmit = (e)=>{
+    e.preventDefault()
+    let amount = this.state.displayReplies += 10
+    this.setState({
+      displayReplies: amount,
+    })
+  }
+
+  display10Replies=()=>{
+    const  newRepliesArr = []
+    for (let i = 0; i < this.state.displayReplies; i++){
+      if(this.props.replies[i]){
+      newRepliesArr.push(this.props.replies[i])
+    }
+    }
+      return newRepliesArr 
+  }
+
   dateAndTime = (d)=>{
     const date = new Date(d)
     const time = new Date(d)
@@ -67,7 +85,7 @@ class Reply extends Component {
 
   renderReplies = () =>{ 
     return ( 
-      this.props.comment && this.props.comment.replies.map((reply)=>{
+      this.props.replies && this.display10Replies().map((reply)=>{
         return  (    
           <div   className='replies' key={reply.id}> 
             <div>
@@ -110,13 +128,22 @@ class Reply extends Component {
     return (
       <div>
         <div>
-          <button onClick={this.handleOnclickReply} className={this.state.acordion}> {`${this.props.comment.replies.length} Replies`} </button>
+          <button onClick={this.handleOnclickReply} className={this.state.acordion}> {`${this.props.replies.length} Replies`} </button>
           </div>
           <div className={this.state.displayAcordion}>
             <div>
               {this.renderReplies()}
             </div>
-            {this.replyForm()}
+            <div>
+              <form onSubmit={this.displayOnSubmit} >  
+                <input  className='reload' type='submit' value='Reload more replies'/> 
+              </form>
+            </div>
+            <br/>
+            <div> 
+              {this.replyForm()} 
+            </div>    
+               
         </div>
       </div>
     );
