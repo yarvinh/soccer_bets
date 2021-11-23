@@ -24,7 +24,18 @@ class Game < ApplicationRecord
     end
 
     def self.date(d)
-        Date.parse(d)
+       Date.parse(d)
+    end
+    def ninety_minutes
+        game_start = Time.parse(self.time.localtime.strftime("%H:%M"))
+        game_finish = game_start + 5.minutes
+        now  = Time.now
+        if now > game_start && now < game_finish
+            true
+        else
+            false
+        end
+
     end
 
 end

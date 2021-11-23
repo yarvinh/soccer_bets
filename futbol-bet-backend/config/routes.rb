@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   resources :users
   resources :games
   # resources :sessions, only: [:create]
+  patch 'close_event', to:  'games#close_event'
+  patch '/reset', to: 'team_events#reset_event'
   get '/login', to: 'sessions#new'
   post '/login',    to: 'sessions#create'
   post '/signout',   to: 'sessions#destroy'

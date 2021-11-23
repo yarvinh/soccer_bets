@@ -8,7 +8,12 @@
   def to_serialized_json
       options = {
         include: {
-          teams: {},
+          team_events: {
+            include:{
+              team: {}
+            }
+          },
+          # teams: {},
           likes: {},
           
           bets: {

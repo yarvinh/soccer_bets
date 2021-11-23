@@ -57,18 +57,25 @@ class GamesController < ApplicationController
 
     end
 
-    def update
+    def update    
         game = Game.find(params[:id])
         game.update(likes: game.likes + 1)
         render json:GamesSerializer.new(Game.all).to_serialized_json
     end
 
     def destroy
- 
         game = Game.find(params[:id])
         game.team_events.each{|e|e.delete}
         game.delete
         redirect_to games_path
+    end
+    def close_event
+        game = Game.find_by_id(params[:id])
+        if game
+            game.pending = false
+            game.save
+        end
+        redirect_to '/games'
     end
 
     def game_params(*args)

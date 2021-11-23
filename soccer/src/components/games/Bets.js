@@ -40,7 +40,7 @@ class Bets extends Component {
     const bets = [...this.props.bets]
     let counter = 0
     bets.forEach((bet) => {
-      if (this.props.teamOne && this.props.teamOne.id.toString() === bet.team_id.toString()){
+      if (bet.team && this.props.teamOne && this.props.teamOne.id.toString() === bet.team_id.toString()){
         counter  += bet.amount 
       }else{
         counter += 0
@@ -52,9 +52,8 @@ class Bets extends Component {
   teamTwoBetSum = () => {  
     const bets = [...this.props.bets]
     let  counter = 0
-    bets.forEach((bet) => {
-     
-      if (this.props.teamTwo.id.toString() === bet.team_id.toString()){
+    bets.forEach((bet) => { 
+      if (bet.team && this.props.teamTwo.id.toString() === bet.team_id.toString()){
         counter += bet.amount    
       }else{
         counter += 0  

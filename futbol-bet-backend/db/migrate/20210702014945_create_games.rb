@@ -5,8 +5,8 @@ class CreateGames < ActiveRecord::Migration[6.0]
     #  t.string :team_1_id
     #  t.string :team_2_id
      t.string :competition
-     t.string :winner
-     t.boolean :pending, default: false
+    #  t.string :winner
+     t.boolean :pending, default: true
      t.date :date
      t.time :time
      t.timestamps
