@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       end
   
       def create  
-       
+      # when there is no admin
         if user_params[:admin] && !User.find_by(admin: true)
           @user = User.new(user_params)
             if @user.valid?
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
             login!
             render json: {logged_in: true, user: @user }
           else
-             render json: { logged_in: false , messages: @user.errors.full_messages }
+             render status: 200, json: { logged_in: false , messages: @user.errors.full_messages }
           end
         end
       end

@@ -22,11 +22,6 @@ class App extends Component{
     this.fetchCurrentUser()  
   }
 
-  redirect =()=>{
-    this.fetchCurrentUser()   
-    return <Redirect to='/games' />
-  
-  }
   confirmLoggedIn=()=>{
     this.fetchCurrentUser()   
     return  this.props.loggedIn
@@ -40,7 +35,6 @@ class App extends Component{
   
 
 render () {
- 
   return ( 
     <>   
         <BrowserRouter >
@@ -67,7 +61,7 @@ render () {
             <Route exact path='/login' render={(props)=>(<Login {...props} redirect={this.redirect} confirmLoggedIn={this.confirmLoggedIn}/>)}>
             {this.props.loggedIn ? <Redirect to='/games'/>:  null} 
             </Route>
-            <Route exact path='/signup' render={(props)=>(<CreateUsersContainer  {...props} redirect={this.redirect} confirmLoggedIn={this.confirmLoggedIn}/>)}/>
+            <Route exact path='/signup' render={(props)=>(<CreateUsersContainer  {...props} redirect={this.redirect} />)}/>
             <Route exact path='/games' render={(props)=>(<GamesContainer {...props} fetchCurrentUser={this.fetchCurrentUser} currentUser={this.props.user} loggedIn={this.props.loggedIn}/>)}/>
             <Route exact path='/teams' component={Teams}/>
           </Switch>
@@ -83,9 +77,10 @@ render () {
 
 
 const mapStateToProps = state => { 
+  console.log(state)
   return {
-     user:  state.user.data && state.user.data.user,
-     loggedIn:  state.user.data && state.user.data.logged_in,
+     user:  state.user.user && state.user.user.user,
+     loggedIn:  state.user.user && state.user.user.logged_in,
      loading: state.loading
   }
 }

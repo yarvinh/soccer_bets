@@ -2,10 +2,12 @@
 
   class GamesSerializer
     def initialize(user_object)
+      Game.ninety_minutes
        @games = user_object
     end
 
   def to_serialized_json
+    
       options = {
         include: {
           team_events: {
@@ -13,7 +15,7 @@
               team: {}
             }
           },
-          # teams: {},
+          teams: {},
           likes: {},
           
           bets: {

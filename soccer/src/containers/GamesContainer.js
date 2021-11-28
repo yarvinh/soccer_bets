@@ -4,7 +4,7 @@ import { fetchGames,dispatchSetFilter} from '../actions/gameActions'
 import Game from '../components/games/Game'
 import gameSelector from '../selectors/gameSelector'
 import Comment from '../components/comments/Comment'
-// import Likes from '../components/Likes'
+
 
 
 class GamesContainer extends Component {
@@ -13,10 +13,6 @@ class GamesContainer extends Component {
     componentDidMount() {
        this.props.fetchGames()    
     }
-
-
-
-
 
    onClickHandle = (e) => {
      this.props.dispatchSetFilter(e.target.value)
@@ -27,7 +23,7 @@ class GamesContainer extends Component {
         return this.props.games && this.props.games.map((game)=>{
             return (      
            
-             <Game fetchCurrentUser={this.props.fetchCurrentUser} loggedIn={this.props.loggedIn} key={game.id} currentUser={this.props.currentUser}  game={game} teamOne={game.team_events[0].team} teamTwo={game.team_events[1].team}/>
+             <Game teamEvents={game.team_events}fetchCurrentUser={this.props.fetchCurrentUser} loggedIn={this.props.loggedIn} key={game.id} currentUser={this.props.currentUser}  game={game} teamOne={game.teams[0]} teamTwo={game.teams[1]}/>
 
             )
         })
@@ -40,13 +36,6 @@ class GamesContainer extends Component {
      })
 
      if(game){  
-    //  let comments = game.comments
-      // if(game.comments[0] && game.comments[game.comments.length - 1].created_at > game.comments[0].created_at){  
-      //        comments = game.comments.reverse((a)=>{  
-      //        return a.created_at    
-      //   })
-      // }
-      // console.log(game.comments_by_date)
        return (
          <div>
            <Game  fetchCurrentUser={this.props.fetchCurrentUser} loggedIn={this.props.loggedIn} key={game.id} currentUser={this.props.currentUser}  game={game} teamOne={game.team_events[0].team} teamTwo={game.team_events[1].team}/>
@@ -59,7 +48,6 @@ class GamesContainer extends Component {
   
 
   render() {  
-    console.log(this.props)
     if(this.props.match.path === "/games"){
      return (
        <div>

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   patch '/reset', to: 'team_events#reset_event'
   get '/login', to: 'sessions#new'
   post '/login',    to: 'sessions#create'
-  post '/signout',   to: 'sessions#destroy'
+  post '/signout',   to: 'sessions#log_out'
   get '/islogged_in',to: 'sessions#show'
   delete '/signout', to: 'sessions#destroy'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

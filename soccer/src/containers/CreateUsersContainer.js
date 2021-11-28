@@ -4,21 +4,15 @@ import { createUser } from '../actions/createUsersActions'
 import UserInput from '../components/users/CreateUserInput'
 class CreateUsersContainer extends Component {
 
-
-  componentDidMount() {
-       
-  }
-
-  CreatingUser = (user)=>{
-    this.props.createUser(user)    
-  }
+  creatingUser = (user)=>{
+    this.props.createUser(user)   
+    } 
+  
 
   render() {
-   
     return (
       <div>
-        <UserInput CreatingUser={this.CreatingUser}/>
-        {this.props.confirmLoggedIn()? this.props.redirect():null} 
+         {this.props.user.user && this.props.user.user.logged_in? this.props.redirect(): <UserInput userResponse={this.props.user.user} creatingUser={this.creatingUser}/>}  
       </div>
     );
   }
@@ -27,8 +21,9 @@ class CreateUsersContainer extends Component {
 
 
 const mapStateToProps = state => { 
+  
   return {
-     users: state.users,
+     user: state.user,
      loading: state.loading
   }
 }

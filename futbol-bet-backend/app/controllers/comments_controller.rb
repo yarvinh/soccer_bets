@@ -29,8 +29,7 @@ class CommentsController < ApplicationController
           comment.likes.each{|e|e.delete}
           comment.delete
       end
-        games = Game.all
-        render json:GamesSerializer.new(games).to_serialized_json
+        render json:GamesSerializer.new(Game.upcoming_games).to_serialized_json
       end
   
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLoginLogOut } from '../../actions/loginActions'
+import {Redirect} from 'react-router-dom'
 
 
 
@@ -8,14 +9,17 @@ import { fetchLoginLogOut } from '../../actions/loginActions'
 class LogOut extends Component {
     
     handleLogOut = () => {
-        this.props.fetchLoginLogOut(this.props.currentUser,'signout')
+        this.props.user.user && this.props.fetchLoginLogOut(this.props.user.user.user,'LOADING_LOGOUT')
+    }
+    redirect =()=>{ 
+      return <Redirect to='/games' />  
     }
   
     render() {
       return(
         <div>
           {this.handleLogOut()}
-           {!this.props.confirmLoggedIn()? this.props.redirect():null}     
+           {this.props.user.user && !this.props.user.logged_in? this.redirect():null}     
         </div>
       );
   
@@ -24,6 +28,12 @@ class LogOut extends Component {
 
 };
 
+const mapStateToProps = state => { 
+  return {
+      user: state.user,
+      loading: state.user.loading
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -31,4 +41,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(LogOut)
+export default connect(mapStateToProps , mapDispatchToProps)(LogOut)

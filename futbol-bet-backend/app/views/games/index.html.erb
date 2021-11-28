@@ -4,11 +4,12 @@
 <ul>
 
     <% @games.each do |game| %>
-      <% if game.ninety_minutes%>
-          <h3> LIVE</h3>
-       <%else%>
-          <h3>NOT LIVE</h3>
-       <%end%>
+ 
+          <h3>
+         
+          <%= game.status%>
+          </h3>
+      
 
         <li>
            <p> <%= game.teams[0].fc%> VS

@@ -10,11 +10,11 @@ class GamesController < ApplicationController
              @games = Game.all
             
           else
-            games = Game.future_games
+            games = Game.upcoming_games
             render json:GamesSerializer.new(games).to_serialized_json
           end
         else
-            games = Game.future_games
+            games = Game.upcoming_games
             render json:GamesSerializer.new(games).to_serialized_json
         end    
     end
@@ -60,21 +60,39 @@ class GamesController < ApplicationController
     def update    
         game = Game.find(params[:id])
         game.update(likes: game.likes + 1)
-        render json:GamesSerializer.new(Game.all).to_serialized_json
+        render json:GamesSerializer.new(Game.upcoming_games).to_serialized_json
     end
 
     def destroy
         game = Game.find(params[:id])
+
+        game.likes.each{|e|e.delete}
+        game.team_events.each{|e|e.delete}
+        game.comments.each{|c| 
+            c.likes.each{|like|like.delete}
+            c.replies.each{|r|  
+              r.likes.each{|e|e.delete}
+              r.delete
+            }
+            c.delete
+          }
+          
         game.team_events.each{|e|e.delete}
         game.delete
         redirect_to games_path
     end
+
     def close_event
         game = Game.find_by_id(params[:id])
         if game
             game.pending = false
             game.save
+            game.team_events.each{|t|
+              t.points = 1
+              t.save
+            }
         end
+        game.game_bets
         redirect_to '/games'
     end
 

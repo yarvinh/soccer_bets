@@ -10,11 +10,6 @@ class Bets extends Component {
     amount: ''
   }
 
-
-
-
-
-
   handleSubmit = (e) => {
     e.preventDefault()
     if (this.state.team_id !== ''&& this.state.game_id !== '' && this.state.user_id !== '' && this.state.amount !== '' && !this.state.amount.includes('-')){
@@ -70,15 +65,30 @@ class Bets extends Component {
       }, 0);
   }
 
+  tieBetsTotal=()=>{
+    const bets = [...this.props.bets]
+    let  counter = 0
+    bets.forEach((bet) => { 
+      if (!bet.team){
+        counter += bet.amount    
+      }else{
+        counter += 0  
+      }
+    });
+       return counter
+  }
+
   betExplanation = () => {
-    let teamOneBetcalcs = (this.allBetsTotal()/1)/this.teamTwoBetSum()
-    let teamTwoBetcalcs = (this.allBetsTotal()/1)/this.teamOneBetSum()
+    let teamOneBetcalcs = (this.allBetsTotal()/1)/this.teamOneBetSum()
+    let teamTwoBetcalcs = (this.allBetsTotal()/1)/this.teamTwoBetSum()
+    let tieBetsCalc = (this.allBetsTotal()/1)/this.tieBetsTotal()
 
     if(this.teamOneBetSum() > 99 && this.teamTwoBetSum() > 99){
       return(
         <div>
-          <p><img src={this.props.teamOne.logo_url} alt='' width="15" height="15"/> you get ${Math.floor(teamOneBetcalcs)} for each dolar you bet</p>
-          <p><img src={this.props.teamTwo.logo_url} alt='' width="15" height="15"/>you get ${Math.floor(teamTwoBetcalcs)} for each dolar you bet</p>
+          <p><img src={this.props.teamOne.logo_url} alt='' width="15" height="15"/>: you get ${Math.floor(teamOneBetcalcs)} for each dollar you bet</p>
+          <p><img src={this.props.teamTwo.logo_url} alt='' width="15" height="15"/>:you get ${Math.floor(teamTwoBetcalcs)} for each dollar you bet</p>
+          <p>Tie: you get ${Math.floor(tieBetsCalc)} for each dollar you bet</p>
         </div>
         )
     } else {
@@ -93,12 +103,13 @@ class Bets extends Component {
     const currentUserBet = this.props.bets.find((bet)=>{
         return bet.user_id.toString() === this.props.currentUser.id.toString()
     })
-    if (!currentUserBet){   
+    
+    if (!currentUserBet && this.props.game.status != "LIVE" && this.props.game.pending && this.props.game.status != "FINISH"){   
       return (
         <div className='bet_form p-3'>     
           <form onSubmit={this.handleSubmit}> 
             <label className="form-label"> Bets </label> 
-            <br/> 
+           
             <select className="form-select mx-auto mb-3" onChange={this.handleTeamChange}>
               <option value=''>Bet Obtions</option>
               <option value='tie'>Tie</option>
@@ -115,9 +126,9 @@ class Bets extends Component {
           </div>
         </div>
       )
-    } else {
+    } else if (currentUserBet){
 
-      const userSelected = currentUserBet.team && this.props.game.teams.find((t)=>{   
+      const userSelected = currentUserBet && currentUserBet.team && this.props.game.teams.find((t)=>{   
          return  t.id.toString() === currentUserBet.team_id.toString()  
       })
         return (
@@ -126,8 +137,7 @@ class Bets extends Component {
             <span>
               You Bet For:
               {currentUserBet.team ?<img src={userSelected.logo_url} alt='' width="15" height="15"/>: <span>Tie</span>}
-            </span>
-           
+            </span> 
           </div>
           )   
       }

@@ -35,14 +35,12 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
           games: [...state.games],
           loading: true
         } 
-        //////
         case 'LOADING_GAME_BETS':
               return state = {
                 ...state,
                 games: [...state.games],
                 loading: true
         } 
-
         case 'LOADING_COMMENTS':
           return state = {
             ...state,
@@ -54,8 +52,7 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
           ...state,
           games: [...state.games],
           loading: true
-    } 
-       //////
+      } 
       case 'ADD_GAMES':
         return {
            ...state,
@@ -110,63 +107,59 @@ const TeamsReducer = (state = { teams: [], loading: false }, action) => {
     }
 
 
+  const UserReducer = (state = { user: {}, loading: false }, action) => {
 
-    const CreateUsersReducer = (state = { user: {}, loading: false }, action) => {
-  
     switch(action.type) {
       case 'LOADING_USER':
         return state = {
-             ...state,
-          user: state.user,
-          loading: true
-        }
-      case 'ADD_USER':
-        return {
-           ...state,
-          user: action.user,
-          loading: false
-        }
-      default:
-        return state;
-    }
-  }
-
-     const LoginReducer = (state = { user: {}, loading: false }, action) => {
- 
-    switch(action.type) {
-      case 'LOADING_LOGIN':
-        return state = {
-          user: state.user
-        }
-      case 'LOGIN':
-        return state = {
-           
-          user: action.user,
-          loading: false
-        }
-      default:
-        return state;
-    }
-  }
-
-   
-
-
-
-  const UserReducer = (state = { data: {}, loading: false }, action) => {
-    switch(action.type) {
-      case 'LOADING_USER':
-        return state = {
-          data: state.data,
+          ...state,
+          user: state.data,
           loading: true
         } 
+        case 'LOADING_NEW_USER':
+        return state ={
+          ...state,
+          user: state.user,
+          loading: true,    
+        }
+        case 'LOADING_LOGIN':
+          return state = {
+            ...state,
+            user: state.user
+        }
+        case 'LOADING_LOGOUT':
+          return state = {
+            ...state,
+            user: state.user,
+            loading: true
+          } 
 
         case 'ADD_USER':
         return {
            ...state,
-          data: action.data,
+          user: action.data,
           loading: false
         } 
+        case 'ADD_NEW_USER':
+          return {
+             ...state,
+            user: action.user,
+            loading: false
+          } 
+
+          case 'LOGIN':
+            return state = {
+              ...state,
+              user: action.user,
+              loading: false
+            }
+
+            case 'LOGOUT':
+              return state = {
+                ...state,
+                user: action.user,
+                loading: false
+              }
 
       default:
         return state;
@@ -197,8 +190,6 @@ const rootReducer = combineReducers({
   editedMessage: editUserReducer,
   teams: TeamsReducer,
   games: GamesReducer,
-  login: LoginReducer, 
-  createUsers: CreateUsersReducer,
   user: UserReducer,
  
 });

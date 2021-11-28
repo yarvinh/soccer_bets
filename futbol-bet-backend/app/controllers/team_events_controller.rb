@@ -6,6 +6,7 @@ class TeamEventsController < ApplicationController
         event.points += 3
         game.save
         event.save
+        game.game_bets
         redirect_to '/games'
     end
 
@@ -19,7 +20,8 @@ class TeamEventsController < ApplicationController
             event.save
           }
         end
-        redirect_to '/games'
-        
+
+        redirect_to '/games'    
     end
+
 end

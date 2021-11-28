@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLoginLogOut } from '../../actions/loginActions'
 import '../../styles/styles.css'
+import {Redirect} from 'react-router-dom'
 
 
 class Login extends Component {
@@ -9,6 +10,12 @@ class Login extends Component {
        username: '',
        password: '',
        loggedIn: false,
+    }
+
+    redirect =()=>{
+      this.fetchCurrentUser()  
+      return <Redirect to='/games' />
+     
     }
    
     handleOnChangePassword = (e) => {
@@ -26,13 +33,13 @@ class Login extends Component {
 
     handleOnSubmit = (e) => {
        e.preventDefault()
-       this.props.fetchLoginLogOut(this.state, 'login')
+       this.props.fetchLoginLogOut(this.state, 'LOADING_LOGIN')
 
       
     }
 
   render() {
-
+  //  console.log(this.props.user)
     return(
       <div className="container h-100  d-flex  justify-content-center align-items-center">
         <form onSubmit={this.handleOnSubmit} className="form">
@@ -42,7 +49,7 @@ class Login extends Component {
             <input className="form-control" onChange={this.handleOnChangePassword } type="password" value={this.state.password}/>
           <button  className="my-4 btn btn-primary" type="submit">Login</button>
         </form>
-         {this.props.confirmLoggedIn()? this.props.redirect():null}     
+         {this.props.user.user && this.props.user.user.logged_in? this.redirect():null}     
       </div>
     );
 
@@ -54,10 +61,9 @@ class Login extends Component {
 
 
 const mapStateToProps = state => { 
-
   return {
-     user: state.login.user,
-     loading: state.loading
+     user: state.user,
+     loading: state.user.loading
   }
 }
  

@@ -8,7 +8,7 @@ class RepliesController < ApplicationController
           reply.comment = comment
           reply.save
         end
-        render json:GamesSerializer.new(Game.all).to_serialized_json
+        render json:GamesSerializer.new(Game.upcoming_games).to_serialized_json
     end
     
     def destroy
@@ -18,6 +18,6 @@ class RepliesController < ApplicationController
           reply.delete
         end
         games = Game.all
-        render json:GamesSerializer.new(games).to_serialized_json
+        render json:GamesSerializer.new(Game.upcoming_games).to_serialized_json
     end
 end

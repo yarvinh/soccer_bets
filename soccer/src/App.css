@@ -141,6 +141,31 @@
   padding-left: 0;
 }
 
+.live { 
+  color:green;
+  text-align: center;
+  outline: none;
+  font-size: 24px;
+  transition: 0.4s;
+  border-radius: .6rem;
+  overflow-wrap: break-word;
+ 
+}
+
+/* .status {
+     background-color: white; 
+      color: red; 
+     padding: 8px; 
+     width: 50%; 
+     height: auto; 
+     text-align: center;
+     outline: none;
+     font-size: 24px;
+     transition: 0.4s;
+     border-radius: .6rem;
+     overflow-wrap: break-word;
+} */
+
 
 
 

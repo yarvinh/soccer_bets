@@ -11,11 +11,10 @@ class Game extends Component {
  
 
   bets = () => {
-  
-    if (this.props.loggedIn){
+    if (this.props.loggedIn ){
       return (
         <div className="bets-section bg-light mx-auto my-4 py-2">
-          <Bets bets={this.props.game.bets} fetchCurrentUser={this.props.fetchCurrentUser} currentUser={this.props.currentUser} game={this.props.game} teamOne={this.props.teamOne} teamTwo={this.props.teamTwo} />
+          <Bets teams={this.props.game.teams} team_events={this.props.game.team_events} bets={this.props.game.bets} fetchCurrentUser={this.props.fetchCurrentUser} currentUser={this.props.currentUser} game={this.props.game} teamOne={this.props.teamOne} teamTwo={this.props.teamTwo} />
        </div>
       )
     }
@@ -60,6 +59,9 @@ date = ()=>{
                 <div className="card-header">
                   <p> {this.props.game.competition} </p>
                 </div>
+                <div className="status">
+                  {this.props.game.status === "LIVE" ? <p className='live'> {this.props.game.status} </p>: <p> {this.props.game.status}</p>}
+                </div>
                 <Link to={`/games/${this.props.game.id}`}>  
                   <div className="card-body">
                       <span >  
@@ -78,8 +80,10 @@ date = ()=>{
           </div>
           
           {this.renderLikes()}
+   
           <div >
             <span>{this.props.game.bets.length} Bets</span>
+ 
           </div>
           {this.bets()}
 

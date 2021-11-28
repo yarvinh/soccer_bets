@@ -19,10 +19,7 @@ class LikesController < ApplicationController
         like.reply = reply
         like.save
       end
-      
-   
-    games = Game.all
-    render json:GamesSerializer.new(games).to_serialized_json
+    render json:GamesSerializer.new(Game.upcoming_games).to_serialized_json
     end
 
     def destroy
@@ -32,8 +29,7 @@ class LikesController < ApplicationController
           like.delete
         end
       end
-      games = Game.all
-      render json:GamesSerializer.new(games).to_serialized_json
+      render json:GamesSerializer.new(Game.upcoming_games).to_serialized_json
     end
 
 end
