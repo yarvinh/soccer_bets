@@ -55,7 +55,7 @@ class Game < ApplicationRecord
     def game_bets
       loser =  self.team_events.find_by(points: 0) 
       winner = self.team_events.find_by(points: 3) 
-      tie = self.team_events.find_by(points: 1) 
+      tie = self.bets.find_by(team_id: nil) 
       if !self.bets.empty?
         total = self.bets.reduce(0){|s,n| n.amount + s}
       end
@@ -63,13 +63,15 @@ class Game < ApplicationRecord
       if winner && !self.bets.empty?
         winner_bets = self.bets.select{|b|b.team === winner.team }
         total_winner_teams = winner_bets.reduce(0){|s,n| n.amount + s}
-        pay_per_dolar = total / total_winner_teams
-        winner_bets.each{|b|
-        b.user.coins = b.user.coins + (pay_per_dolar * b.amount)
-        b.user.save
-        
-     }
+        if total_winner_teams > 0
+          pay_per_dolar = total / total_winner_teams 
+          winner_bets.each{|b|
+            b.user.coins = b.user.coins + (pay_per_dolar * b.amount)
+            b.user.save
+          }
+        end
       end
+
       if loser && !self.bets.empty?
         loser_bets = self.bets.select{|b|b.team === loser.team }
         total_loser_teams = loser_bets.reduce(0){|s,n| n.amount + s}
@@ -78,11 +80,13 @@ class Game < ApplicationRecord
       if tie && !self.bets.empty?
         tie_bets = self.bets.select{|b|b.team === tie.team }
         total_tie = tie_bets.reduce(0){|s,n| n.amount + s}
-        dolar_per_tie = total / total_tie
-        tie_bets.each{|b|
-           b.user.coins = b.user.coins + (dolar_per_tie * b.amount)
-           b.user.save
-        }
+        if total_tie > 0
+            dolar_per_tie = total / total_tie
+            tie_bets.each{|b|
+               b.user.coins = b.user.coins + (dolar_per_tie * b.amount)
+               b.user.save
+            }
+        end
       end 
        
     end

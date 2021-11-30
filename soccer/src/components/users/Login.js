@@ -12,10 +12,8 @@ class Login extends Component {
        loggedIn: false,
     }
 
-    redirect =()=>{
-      this.fetchCurrentUser()  
-      return <Redirect to='/games' />
-     
+    redirect = ()=>{
+      return <Redirect to='/games' /> 
     }
    
     handleOnChangePassword = (e) => {
@@ -39,7 +37,6 @@ class Login extends Component {
     }
 
   render() {
-  //  console.log(this.props.user)
     return(
       <div className="container h-100  d-flex  justify-content-center align-items-center">
         <form onSubmit={this.handleOnSubmit} className="form">

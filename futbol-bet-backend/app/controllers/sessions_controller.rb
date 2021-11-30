@@ -10,24 +10,43 @@ class SessionsController < ApplicationController
        end
 
     end  
+    def new
+        if logged_in?
+            user = User.find(session[:user_id])
+            redirect_to user_path(user)
+        else
+            render "new"
+        end
+    end
 
     def create  
         @user = User.find_by(username: params[:user][:username])
         if @user && @user.authenticate(params[:user][:password])
             login!
             if @user.admin
-               redirect_to user_path(@user)
+              redirect_to user_path(@user)
             else    
                render json: {logged_in: true, user: @user }
             end
         else
-            render json: {logged_in: false, status: 401, messages: ['wrong password or username'] }
+            redirect_to "/adminlogin"
         end   
+    end
+
+    def login
+        @user = User.find_by(username: params[:user][:username])
+        if @user && @user.authenticate(params[:user][:password])
+            login!  
+            render json: {logged_in: true, user: @user }
+        else
+            render json: {logged_in: false, status: 401, messages: ['wrong password or username'] }
+        end  
+
     end
   
     def destroy
         session.clear
-        redirect_to "/games"
+        redirect_to "/login"
     end
 
     def log_out

@@ -8,4 +8,4 @@ LigueOne.each{|e| Team.create(e)}
 
 
 
-# User.create(name: 'Soccer Bets',username: 'admin',password: '12345',email:"admin@gmail.com",coins: 1000000, address: '114 116th street',admin: true)
+User.create(name: 'Soccer Bets',username: 'admin',password: '12345',email:"admin@gmail.com",coins: 1000000, address: '114 116th street',admin: true)

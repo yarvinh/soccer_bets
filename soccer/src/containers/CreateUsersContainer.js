@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createUser } from '../actions/createUsersActions'
 import UserInput from '../components/users/CreateUserInput'
+import {Redirect} from 'react-router-dom'
 class CreateUsersContainer extends Component {
 
   creatingUser = (user)=>{
@@ -12,7 +13,7 @@ class CreateUsersContainer extends Component {
   render() {
     return (
       <div>
-         {this.props.user.user && this.props.user.user.logged_in? this.props.redirect(): <UserInput userResponse={this.props.user.user} creatingUser={this.creatingUser}/>}  
+         {this.props.user.user && this.props.user.user.logged_in? <Redirect to='/games'/>: <UserInput userResponse={this.props.user.user} creatingUser={this.creatingUser}/>}  
       </div>
     );
   }
