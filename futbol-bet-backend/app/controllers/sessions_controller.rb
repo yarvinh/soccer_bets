@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
             user = User.find(session[:user_id])
             render json: {logged_in: true, user: user}
         else
-            render json: {logged_in: false, messages: ['No user, please login']}
+            render json: {logged_in: false, messages: ['No user, please login or signup' ]}
        end
 
     end  

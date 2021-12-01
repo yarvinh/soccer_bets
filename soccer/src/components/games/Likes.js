@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { dispatchLikes, dislike } from '../../actions/likesActions'
-// import { fetchCurrentUser } from '../../actions/userAction';
+
 
 
 class Likes extends Component {

@@ -23,7 +23,7 @@ class Reply extends Component {
   handleOnKeyUp = (e)=>{
    
     if (e.code  === 'Enter'){
-      const params = {user_id: this.props.user_id, comment_id: this.props.comment_id, reply: this.state.reply }
+      const params = {user_id: this.props.currentUser.id, comment_id: this.props.comment_id, reply: this.state.reply }
       this.props.dispatchReply(params)
       this.setState({
         reply: ''
@@ -56,7 +56,7 @@ class Reply extends Component {
 
   displayOnSubmit = (e)=>{
     e.preventDefault()
-    let amount = this.state.displayReplies += 10
+    let amount = this.state.displayReplies + 10
     this.setState({
       displayReplies: amount,
     })
@@ -89,7 +89,7 @@ class Reply extends Component {
         return  (    
           <div   className='replies' key={reply.id}> 
             <div>
-            {reply.user.id === this.props.user_id? <button onClick={this.handleDeleteOnClick} className='delete' value={reply.id}>x</button>:null}
+            {this.props.currentUser && reply.user.id === this.props.currentUser.id? <button onClick={this.handleDeleteOnClick} className='delete' value={reply.id}>x</button>:null}
               <span >Reply by: {reply.user.name} {this.dateAndTime(reply.created_at)}</span>
              
             </div>
@@ -100,7 +100,7 @@ class Reply extends Component {
               <div>
             
               <div>
-                {this.props.loggedIn? <Likes likes={reply.likes} reply_id={reply.id} user_id={this.props.user_id} gameCommentOrReply={reply}/>:null}
+                {this.props.loggedIn? <Likes likes={reply.likes} reply_id={reply.id} user_id={this.props.currentUser.id} gameCommentOrReply={reply}/>:null}
               </div>
 
               

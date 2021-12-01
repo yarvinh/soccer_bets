@@ -71,7 +71,7 @@ class Comment extends Component {
 
   displayOnSubmit=(e)=>{
    e.preventDefault()
-    let amount = this.state.displayMoreComments += 10
+    let amount = this.state.displayMoreComments + 10
     this.setState({
       displayMoreComments: amount,
     })
@@ -102,7 +102,7 @@ class Comment extends Component {
             <div   className='post' key={comment.id}> 
 
               <div >
-                {comment.user.id === this.props.user.id? <button onClick={this.handleDeleteOnClick} className='delete' value={comment.id}>X</button>:null}
+                {this.props.currentUser && comment.user.id === this.props.currentUser.id? <button onClick={this.handleDeleteOnClick} className='delete' value={comment.id}>X</button>:null}
                 <span >Posted by: {comment.user.name} {this.dateAndTime(comment.created_at)}</span>
               </div>
 
@@ -112,11 +112,11 @@ class Comment extends Component {
 
               <div>
                 <div>
-                  {this.props.loggedIn ?<Likes likes={comment.likes} comment_id={comment.id} user_id={this.props.user.id} gameCommentOrReply={comment}/>: null}
+                  {this.props.loggedIn ?<Likes likes={comment.likes} comment_id={comment.id} user_id={this.props.currentUser.id} gameCommentOrReply={comment}/>: null}
                 </div>
 
                 <div>
-                  <Reply replies={comment.replies_by_date} loggedIn={this.props.loggedIn} comment_id={comment.id} user_id={this.props.user.id} comment={comment}/>
+                  <Reply replies={comment.replies_by_date} loggedIn={this.props.loggedIn} comment_id={comment.id} currentUser={this.props.currentUser} comment={comment}/>
                 </div>  
 
               </div>

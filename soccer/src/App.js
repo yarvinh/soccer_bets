@@ -7,7 +7,7 @@ import GamesContainer from './containers/GamesContainer'
 import CreateUsersContainer from './containers/CreateUsersContainer'
 import Login from './components/users/Login'
 import { fetchCurrentUser} from './actions/userAction'
-import {BrowserRouter, Switch, Route, Redirect,Link} from 'react-router-dom'
+import {BrowserRouter, Switch, Route, Link} from 'react-router-dom'
 import User from './components/users/User'
 import LogOut from './components/users/LogOut'
 import './styles/styles.css'
@@ -27,12 +27,6 @@ class App extends Component{
     return  this.props.loggedIn
 
   }
-
-
-
-
-
-  
 
 render () {
   return ( 
@@ -57,9 +51,9 @@ render () {
           <Switch>
             <Route exact path='/settings' render={(props)=>(<Settings  {...props} currentUser={this.props.user} loggedIn={this.props.loggedIn} />)}/>
             <Route exact path='/games/:id' render={(props)=>(<GamesContainer {...props} fetchCurrentUser={this.fetchCurrentUser} currentUser={this.props.user} loggedIn={this.props.loggedIn}/>)}/>
-            <Route exact path='/signout' render={(props)=>(<LogOut {...props} currentUser={this.props.user} redirect={this.redirect} confirmLoggedIn={this.confirmLoggedIn}/>)}/>
-            <Route exact path='/login' render={(props)=>(<Login {...props} redirect={this.redirect} confirmLoggedIn={this.confirmLoggedIn}/>)}>
-            {this.props.loggedIn ? <Redirect to='/games'/>:  null} 
+            <Route exact path='/signout' render={(props)=>(<LogOut {...props} currentUser={this.props.user} confirmLoggedIn={this.confirmLoggedIn}/>)}/>
+            <Route exact path='/login' render={(props)=>(<Login {...props} confirmLoggedIn={this.confirmLoggedIn}/>)}>
+            {/* {this.props.loggedIn ? <Redirect to='/games'/>:  null}  */}
             </Route>
             <Route exact path='/signup' render={(props)=>(<CreateUsersContainer  {...props} redirect={this.redirect} />)}/>
             <Route exact path='/games' render={(props)=>(<GamesContainer {...props} fetchCurrentUser={this.fetchCurrentUser} currentUser={this.props.user} loggedIn={this.props.loggedIn}/>)}/>
@@ -77,7 +71,6 @@ render () {
 
 
 const mapStateToProps = state => { 
-  console.log(state)
   return {
      user:  state.user.user && state.user.user.user,
      loggedIn:  state.user.user && state.user.user.logged_in,
