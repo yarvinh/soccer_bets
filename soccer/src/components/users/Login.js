@@ -15,6 +15,18 @@ class Login extends Component {
     redirect = ()=>{
       return <Redirect to='/games' /> 
     }
+    errorMessages = () => {
+      
+      if (this.props.user.user && this.props.user.user.messages){
+        if(!this.props.user.user.messages[0].includes("No user")){
+          return  <p>{this.props.user.user.messages[0]}</p> 
+        } else{
+          return null
+        }
+      }
+        
+
+    }
    
     handleOnChangePassword = (e) => {
         this.setState({
@@ -38,6 +50,7 @@ class Login extends Component {
 
   render() {
     return(
+      <div>
       <div className="container h-100  d-flex  justify-content-center align-items-center">
         <form onSubmit={this.handleOnSubmit} className="form">
             <label className="mt-3 form-label">Username</label>
@@ -47,6 +60,9 @@ class Login extends Component {
           <button  className="my-4 btn btn-primary" type="submit">Login</button>
         </form>
          {this.props.user.user && this.props.user.user.logged_in? this.redirect():null}     
+      
+      </div>
+      <div>{this.errorMessages()}</div>
       </div>
     );
 

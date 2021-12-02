@@ -12,15 +12,16 @@ class LogOut extends Component {
         this.props.user.user && this.props.fetchLoginLogOut(this.props.user.user.user,'LOADING_LOGOUT')
     }
 
+    componentDidMount() {
+      this.handleLogOut()
+    }
+
     render() {
       return(
         <div>
-          {this.handleLogOut()}
            {this.props.user.user && !this.props.user.logged_in? <Redirect to='/games'/>:null}     
         </div>
-      );
-  
-      
+      );    
     }
 
 };

@@ -79,9 +79,9 @@ class Bets extends Component {
   }
 
   betExplanation = () => {
-    let teamOneBetcalcs = (this.allBetsTotal()/1)/this.teamOneBetSum()
-    let teamTwoBetcalcs = (this.allBetsTotal()/1)/this.teamTwoBetSum()
-    let tieBetsCalc = (this.allBetsTotal()/1)/this.tieBetsTotal()
+    let teamOneBetcalcs = this.allBetsTotal()/this.teamOneBetSum()
+    let teamTwoBetcalcs = this.allBetsTotal()/this.teamTwoBetSum()
+    let tieBetsCalc = this.allBetsTotal()/this.tieBetsTotal()
 
     if(this.teamOneBetSum() > 99 && this.teamTwoBetSum() > 99){
       return(

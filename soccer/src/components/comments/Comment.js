@@ -48,7 +48,7 @@ class Comment extends Component {
 
   handleOnSubmit = (e)=>{
     e.preventDefault()
-    const params = {comment: this.state.comment,user_id: this.props.user.id, game_id: this.props.game.id}
+    const params = {comment: this.state.comment,user_id: this.props.currentUser.id, game_id: this.props.game.id}
     this.props.dispatchComment(params)
       this.setState({
         comment: ""

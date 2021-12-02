@@ -6,9 +6,6 @@ import '../../styles/styles.css'
 
 
 class Game extends Component {
-  
-
- 
 
   bets = () => {
     if (this.props.loggedIn ){
@@ -49,7 +46,6 @@ date = ()=>{
 
 
   render() {
-
     return (
       <div className="container d-flex justify-content-center">
         <div className="card-container mb-3">
