@@ -1,71 +1,69 @@
 
 import { connect } from 'react-redux';
-import React, { Component } from 'react';
+import {useEffect } from 'react';
 import './App.css';
 import Teams from './components/Teams'
 import GamesContainer from './containers/GamesContainer'
 import CreateUsersContainer from './containers/CreateUsersContainer'
 import Login from './components/users/Login'
 import { fetchCurrentUser} from './actions/userAction'
-import {BrowserRouter, Switch, Route, Link} from 'react-router-dom'
+import {BrowserRouter, Route, Link, Routes} from 'react-router-dom'
 import User from './components/users/User'
 import LogOut from './components/users/LogOut'
 import './styles/styles.css'
 import Settings from './components/users/Settings';
+import GameDetail from './components/GameDetail';
+import { fetchGames } from './actions/gameActions';
 
-
-class App extends Component{
-  fetchCurrentUser = () => {
-    this.props.fetchCurrentUser()  
+const  App = (props)=> {
+  const fetchCurrentUser = () => {
+    props.fetchCurrentUser()  
   }
-  componentDidMount(){
-    this.fetchCurrentUser()  
+  useEffect(()=>{
+    fetchCurrentUser()  
+    props.fetchGames() 
+  },[])
+
+  const confirmLoggedIn=()=>{
+    fetchCurrentUser()   
+    return  props.loggedIn
+
   }
 
-  confirmLoggedIn=()=>{
-    this.fetchCurrentUser()   
-    return  this.props.loggedIn
 
-  }
 
-render () {
+
   return ( 
     <>   
         <BrowserRouter >
-          
         <div className="App">
-        
         <nav  className="navbar navbar-dark bg-primary">
           <div className="container"> 
-          {/* <a className="navbar-brand" href="#">Soccer Bets</a>  */}
           <p className="navbar-brand">Soccer Bets</p>
               <Link to='/games' className="nav-link custom-nav-link">Games</Link>
               <Link to='/teams' className="nav-link custom-nav-link">Teams</Link>
-              {!this.props.loggedIn ? <Link to='/login' className="nav-link custom-nav-link">Log In</Link>:  <Link to='/signout' className="nav-link custom-nav-link">Sign Out</Link>  }
-              {!this.props.loggedIn ? <Link to='/signup' className="nav-link custom-nav-link">Sign Up</Link> : null} 
-              {this.props.loggedIn ? <Link to='/settings' className="nav-link custom-nav-link">Settings</Link> : null} 
+              {!props.loggedIn ? <Link to='/login' className="nav-link custom-nav-link">Log In</Link>:  <Link to='/signout' className="nav-link custom-nav-link">Sign Out</Link>  }
+              {!props.loggedIn && <Link to='/signup' className="nav-link custom-nav-link">Sign Up</Link> } 
+              {props.loggedIn && <Link to='/settings' className="nav-link custom-nav-link">Settings</Link> } 
           </div>    
         </nav>
-        {this.props.loggedIn ? <User user={this.props.user}/>: null} 
+        {props.loggedIn && <User user={props.user}/>} 
          
-          <Switch>
-            <Route exact path='/settings' render={(props)=>(<Settings  {...props} currentUser={this.props.user} loggedIn={this.props.loggedIn} />)}/>
-            <Route exact path='/games/:id' render={(props)=>(<GamesContainer {...props} fetchCurrentUser={this.fetchCurrentUser} currentUser={this.props.user} loggedIn={this.props.loggedIn}/>)}/>
-            <Route exact path='/signout' render={(props)=>(<LogOut {...props} currentUser={this.props.user} confirmLoggedIn={this.confirmLoggedIn}/>)}/>
-            <Route exact path='/login' render={(props)=>(<Login {...props} confirmLoggedIn={this.confirmLoggedIn}/>)}>
-            {/* {this.props.loggedIn ? <Redirect to='/games'/>:  null}  */}
+          <Routes>
+            <Route exact path='/settings' element ={<Settings currentUser={props.user} loggedIn={props.loggedIn} />}/>
+            <Route exact path='/games/:id' element ={<GameDetail currentUser={props.user} loggedIn={props.loggedIn}/>}/>
+            <Route exact path='/signout' element={<LogOut currentUser={props.user} confirmLoggedIn={confirmLoggedIn}/>}/>
+            <Route exact path='/login' element={<Login  confirmLoggedIn={confirmLoggedIn}/>}>
             </Route>
-            <Route exact path='/signup' render={(props)=>(<CreateUsersContainer  {...props} redirect={this.redirect} />)}/>
-            <Route exact path='/games' render={(props)=>(<GamesContainer {...props} fetchCurrentUser={this.fetchCurrentUser} currentUser={this.props.user} loggedIn={this.props.loggedIn}/>)}/>
-            <Route exact path='/teams' component={Teams}/>
-          </Switch>
+            <Route exact path='/signup'element={<CreateUsersContainer />}/>
+            <Route exact path='/games' element={<GamesContainer/>}/>
+            <Route exact path='/teams' element={<Teams/>}/>
+          </Routes>
          </div> 
         </BrowserRouter>
     </>
-  
-    
-  );
-}
+
+  )
 }
 
 
@@ -82,6 +80,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    fetchGames: ()=> dispatch(fetchGames()),
     fetchCurrentUser: (action) => dispatch(fetchCurrentUser(action)),
   }
 }

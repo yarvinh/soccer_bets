@@ -1,11 +1,7 @@
-const gameSelector = (games,filterBy) => {
-
-    if(filterBy === 'all'){
+export const gameSelector = (games,filterBy) => {
+    if(filterBy === 'all')
         return games
-    } 
-    return games.filter( (game)=>{
-        return game.competition === filterBy
-    })
+    else
+        return games.filter( game=> game.competition === filterBy)
 }
 
-export default gameSelector 

@@ -1,28 +1,26 @@
-import React, { Component } from 'react';
+import {useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchLoginLogOut } from '../../actions/loginActions'
-import {Redirect} from 'react-router-dom'
+import {Navigate} from 'react-router-dom'
 
 
 
 
-class LogOut extends Component {
-    
-    handleLogOut = () => {
-        this.props.user.user && this.props.fetchLoginLogOut(this.props.user.user.user,'LOADING_LOGOUT')
+const LogOut = (props)=>{
+    const handleLogOut = () => {
+        props.user.user && props.fetchLoginLogOut(props.user.user.user,'LOADING_LOGOUT')
     }
 
-    componentDidMount() {
-      this.handleLogOut()
-    }
+    useEffect(() => {
+      handleLogOut()
+    },[])
 
-    render() {
+
       return(
         <div>
-           {this.props.user.user && !this.props.user.logged_in? <Redirect to='/games'/>:null}     
+           {props.user.user && !props.user.logged_in && <Navigate to='/games'/>}     
         </div>
       );    
-    }
 
 };
 

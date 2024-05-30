@@ -1,57 +1,49 @@
-import React, { Component } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchGames,dispatchSetFilter} from '../actions/gameActions'
 import Game from '../components/games/Game'
-import gameSelector from '../selectors/gameSelector'
+import {gameSelector} from '../selectors/gameSelector'
 import Comment from '../components/comments/Comment'
 
 
 
-class GamesContainer extends Component {
+const GamesContainer = (props)=>{
+  console.log(props)
+  useEffect(()=> {
+      props.fetchGames()    
+  },[])
 
-
-    componentDidMount() {
-       this.props.fetchGames()    
-    }
-
-   onClickHandle = (e) => {
-     this.props.dispatchSetFilter(e.target.value)
-
+   const onClickHandle = (e) => {
+     props.dispatchSetFilter(e.target.value)
    }
 
-   renderGames = ()=>{
-        return this.props.games && this.props.games.map((game)=>{
+   const renderGames = ()=>{
+        return props.games?.map((game)=>{
             return (      
-           
-             <Game teamEvents={game.team_events}fetchCurrentUser={this.props.fetchCurrentUser} loggedIn={this.props.loggedIn} key={game.id} currentUser={this.props.currentUser}  game={game} teamOne={game.teams[0]} teamTwo={game.teams[1]}/>
-
+             <Game teamEvents={game.team_events} fetchCurrentUser={props.fetchCurrentUser} loggedIn={props.loggedIn} key={game.id} currentUser={props.currentUser}  game={game} teamOne={game.teams[0]} teamTwo={game.teams[1]}/>
             )
         })
    }
 
-   renderGameWithId = () => {
-    
-    const game = this.props.games && this.props.games.find((game)=>{
-       return game.id.toString() ===  this.props.match.params.id.toString()
-     })
+  //  const renderGameWithId = () => {
+  //   const game = props.games?.find((game)=>{
+  //      return game.id.toString() ===  props.match?.params.id.toString()
+  //    })
+  //    console.log(game)
+  //    if(game){  
+  //      return (
+  //        <div>
+  //          <Game  fetchCurrentUser={props.fetchCurrentUser} loggedIn={props.loggedIn} key={game.id} currentUser={props.currentUser}  game={game} teamOne={game.team_events[0].team} teamTwo={game.team_events[1].team}/>
+  //          <Comment comments={game.comments_by_date} game={game} currentUser={props.currentUser}  loggedIn={props.loggedIn} />
+  //        </div>
+  //      )
+  //    } 
+  // }
 
-     if(game){  
-       return (
-         <div>
-           <Game  fetchCurrentUser={this.props.fetchCurrentUser} loggedIn={this.props.loggedIn} key={game.id} currentUser={this.props.currentUser}  game={game} teamOne={game.team_events[0].team} teamTwo={game.team_events[1].team}/>
-           <Comment comments={game.comments_by_date} game={game} currentUser={this.props.currentUser}  loggedIn={this.props.loggedIn} />
-         </div>
-       )
-     } 
-  }
 
-  
-
-  render() {  
-    if(this.props.match.path === "/games"){
      return (
-       <div>
-        <select onChange={this.onClickHandle} className="form-select my-3 mx-auto"> 
+       <section className='games-container'>
+        <select onChange={onClickHandle} className="form-select my-3 mx-auto"> 
            <option value='all'>All</option>
            <option value='Champion League'>UEFA Champion league</option>
            <option value='Premier League'>Premier league</option>
@@ -61,24 +53,18 @@ class GamesContainer extends Component {
            <option value='Bundesliga'>Bundesliga</option>
         </select>
         <div>
-          {this.renderGames()} 
+          {renderGames()} 
         </div>
-         
-       </div>
+      </section>
      );
-    } else {
-       return (
-         <div>
-           {this.renderGameWithId()}
-         </div>
-       )
-    }
-   }
- };
+  };
 
 
 const mapStateToProps = state => { 
+  
   return {
+     user: state.user.user,
+     teams: state.teams.teams,
      games: gameSelector(state.games.games,state.games.filter),
      loading: state.loading
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchLoginLogOut } from '../../actions/loginActions'
 import '../../styles/styles.css'
-import {Redirect} from 'react-router-dom'
+import {Navigate} from 'react-router-dom'
 
 
 class Login extends Component {
@@ -13,7 +13,7 @@ class Login extends Component {
     }
 
     redirect = ()=>{
-      return <Redirect to='/games' /> 
+      return <Navigate to='/games' /> 
     }
     errorMessages = () => {
       
@@ -24,8 +24,6 @@ class Login extends Component {
           return null
         }
       }
-        
-
     }
    
     handleOnChangePassword = (e) => {

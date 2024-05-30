@@ -1,85 +1,45 @@
-import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { dispatchLikes, dislike } from '../../actions/likesActions'
+import { LIKED_STYLE, NO_LIKE_STYLE } from '../../consts/likesConst';
 
-
-
-class Likes extends Component {
-
-
-    handleOnClickLikes = (e) => {
-      const likesParams = {user_id: this.props.user_id,game_id: this.props.game_id,comment_id: this.props.comment_id, reply_id: this.props.reply_id}
-      this.props.dispatchLikes(likesParams)
+const Likes = (props)=>{
+    const handleOnClick = (e) => {
+        const likesParams = {user_id: props.user_id, game_id: props.game_id,comment_id: props.comment_id, reply_id: props.reply_id}
+        likedIt ? props.dislike(likedIt) : props.dispatchLikes(likesParams)
     }
 
-    handleOnclickDislike = (e)=>{
-        this.props.dislike(this.likedIt())
-    }
+    const likedIt = props.likes.find(like => like.user_id  === props.user_id)
 
-    likedIt = ()=>{
-        return this.props.gameCommentOrReply && this.props.gameCommentOrReply.likes.find((like)=>{
-            if (this.props.user_id){
-              return like.user_id  === this.props.user_id.toString()
-            }
-        })
-    }
-
-    renderGameLikes = ()=>{
-        const style = {
-            color: 'red',
-            fontSize: 20,
-            cursor: 'pointer'
-        };
+    // const renderCommentLikes = ()=>{
+    //     const style = {
+    //         color: 'red',
+    //         fontSize: 20
+    //     };
        
-        if (this.likedIt()){
-            return (
-                <div>
-                    <i  onClick={this.handleOnclickDislike} style={style} className="fas fa-heart"></i> 
-                </div>
-            )
-        }else{
-            return (
-                <div>
-                    <i onClick={this.handleOnClickLikes} style={{cursor: 'pointer'}}className="far fa-heart"></i> 
-                </div>
-            )   
-        }
-       
-    }
+    //     if (likedIt()){
+    //         return (
+    //             <div>
+    //                 <img src='/instagram-likes.svg' style={LIKED_STYLE} />
+    //             </div>
+    //         )
+    //     }else{
+    //         return (
+    //             <div>
+    //                 < img src='/instagram-likes.svg' onClick={handleOnClickLikes} style={NO_LIKE_STYLE }/>
+    //             </div>
+    //         )   
+    //     } 
+    // }
 
-    renderCommentLikes = ()=>{
-        const style = {
-            color: 'red',
-            fontSize: 20
-        };
-       
-        if (this.likedIt()){
-            return (
-                <div>
-                    <i  onClick={this.handleOnclickDislike} style={style} className="fas fa-heart"></i> 
-                </div>
-            )
-        }else{
-            return (
-                <div>
-                    <i onClick={this.handleOnClickLikes} className="far fa-heart"></i> 
-                </div>
-            )   
-        }
-       
-    }
 
-    
- 
-  render() {
-      return(
-     <div>
-         {this.renderGameLikes()}
-         <span>Likes {this.props.likes.length}</span>
-     </div>
-      )
-
-   };
+    return(
+        <div>     
+            <div>
+                <img onClick={handleOnClick} src='/instagram-likes.svg'  style={likedIt? NO_LIKE_STYLE : LIKED_STYLE } /> 
+            </div>
+            <span>Likes {props.likes.length}</span>
+        </div>
+    )
 }
 
 
