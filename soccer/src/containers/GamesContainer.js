@@ -3,12 +3,9 @@ import { connect } from 'react-redux';
 import { fetchGames,dispatchSetFilter} from '../actions/gameActions'
 import Game from '../components/games/Game'
 import {gameSelector} from '../selectors/gameSelector'
-import Comment from '../components/comments/Comment'
-
-
 
 const GamesContainer = (props)=>{
-  console.log(props)
+
   useEffect(()=> {
       props.fetchGames()    
   },[])
@@ -25,25 +22,9 @@ const GamesContainer = (props)=>{
         })
    }
 
-  //  const renderGameWithId = () => {
-  //   const game = props.games?.find((game)=>{
-  //      return game.id.toString() ===  props.match?.params.id.toString()
-  //    })
-  //    console.log(game)
-  //    if(game){  
-  //      return (
-  //        <div>
-  //          <Game  fetchCurrentUser={props.fetchCurrentUser} loggedIn={props.loggedIn} key={game.id} currentUser={props.currentUser}  game={game} teamOne={game.team_events[0].team} teamTwo={game.team_events[1].team}/>
-  //          <Comment comments={game.comments_by_date} game={game} currentUser={props.currentUser}  loggedIn={props.loggedIn} />
-  //        </div>
-  //      )
-  //    } 
-  // }
-
-
      return (
        <section className='games-container'>
-        <select onChange={onClickHandle} className="form-select my-3 mx-auto"> 
+        <select onChange={onClickHandle} className="form-select  mx-auto"> 
            <option value='all'>All</option>
            <option value='Champion League'>UEFA Champion league</option>
            <option value='Premier League'>Premier league</option>

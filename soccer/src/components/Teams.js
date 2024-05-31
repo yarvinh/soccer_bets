@@ -45,7 +45,7 @@ class Teams extends Component {
 
     return (
       <div>   
-          <select onChange={this.onClickHandle} className="form-select my-3 form-select mx-auto"> 
+          <select onChange={this.onClickHandle} className="form-select form-select mx-auto"> 
             <option  value='all'>Select Competition</option>
             <option value='Premier League'>Premier league</option>
             <option value='La Liga'>La Liga Santander</option>

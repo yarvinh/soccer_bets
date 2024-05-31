@@ -18,7 +18,7 @@ const GameDetail=(props)=>{
                     <div className="card game-card text-center mx-auto my-3" >     
                     <div  className="game">
                         <div className="card-header">
-                            <p> {game?.competition} </p>
+                            <h3> {game?.competition} </h3>
                         </div>
                         <div className="status">
                             {game?.status === "LIVE" ? <p className='live'> {game?.status} </p>: <p> {game?.status}</p>}

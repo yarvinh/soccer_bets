@@ -1,24 +1,38 @@
 
 import { connect } from 'react-redux';
-import {useEffect } from 'react';
+import {useEffect, useState } from 'react';
 import './App.css';
 import Teams from './components/Teams'
 import GamesContainer from './containers/GamesContainer'
 import CreateUsersContainer from './containers/CreateUsersContainer'
 import Login from './components/users/Login'
 import { fetchCurrentUser} from './actions/userAction'
-import {BrowserRouter, Route, Link, Routes} from 'react-router-dom'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import User from './components/users/User'
 import LogOut from './components/users/LogOut'
 import './styles/styles.css'
 import Settings from './components/users/Settings';
 import GameDetail from './components/GameDetail';
 import { fetchGames } from './actions/gameActions';
+import NavBar from './components/nav-bar/NavBar';
+import NavBarButton from './components/nav-bar/NavButton';
 
 const  App = (props)=> {
   const fetchCurrentUser = () => {
     props.fetchCurrentUser()  
   }
+  
+  const [isDiplay, setIsDisplay] = useState(false)
+
+  const handleonclick = (e)=>{
+      setIsDisplay((pre)=>!pre)
+  }
+
+  const handleOnAcordion = (e)=>{
+    if (!e.target.className.includes("display"))
+      setIsDisplay(false)
+  }
+
   useEffect(()=>{
     fetchCurrentUser()  
     props.fetchGames() 
@@ -30,25 +44,16 @@ const  App = (props)=> {
 
   }
 
-
-
-
   return ( 
-    <>   
+    <main>   
         <BrowserRouter >
+        <section className={!isDiplay ?'profile-inf': "none"}>
+         {!isDiplay && <img src='/IMG_0686-min.jpeg' className="profile-image" alt="profile image"/>}
+          <NavBarButton handleonclick={handleonclick} isDiplay={isDiplay}/>
+        </section>
+        {isDiplay && <NavBar handleOnAcordion={handleOnAcordion} loggedIn={props.loggedIn}/>}
         <div className="App">
-        <nav  className="navbar navbar-dark bg-primary">
-          <div className="container"> 
-          <p className="navbar-brand">Soccer Bets</p>
-              <Link to='/games' className="nav-link custom-nav-link">Games</Link>
-              <Link to='/teams' className="nav-link custom-nav-link">Teams</Link>
-              {!props.loggedIn ? <Link to='/login' className="nav-link custom-nav-link">Log In</Link>:  <Link to='/signout' className="nav-link custom-nav-link">Sign Out</Link>  }
-              {!props.loggedIn && <Link to='/signup' className="nav-link custom-nav-link">Sign Up</Link> } 
-              {props.loggedIn && <Link to='/settings' className="nav-link custom-nav-link">Settings</Link> } 
-          </div>    
-        </nav>
-        {props.loggedIn && <User user={props.user}/>} 
-         
+           {props.loggedIn && <User user={props.user}/>} 
           <Routes>
             <Route exact path='/settings' element ={<Settings currentUser={props.user} loggedIn={props.loggedIn} />}/>
             <Route exact path='/games/:id' element ={<GameDetail currentUser={props.user} loggedIn={props.loggedIn}/>}/>
@@ -61,7 +66,7 @@ const  App = (props)=> {
           </Routes>
          </div> 
         </BrowserRouter>
-    </>
+    </main>
 
   )
 }

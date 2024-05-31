@@ -73,16 +73,10 @@ date (){
               </div>
             </div>
           </div>
-          
-          {/* {this.renderLikes()} */}
-   
           <div >
             <span>{this.props.game.bets.length} Bets</span>
  
           </div>
-          {/* {this.bets()} */}
-
-
         </div>
 
     </div>
